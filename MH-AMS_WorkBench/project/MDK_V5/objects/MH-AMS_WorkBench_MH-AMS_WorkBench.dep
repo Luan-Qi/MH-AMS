@@ -1,0 +1,608 @@
+Dependencies for Project 'MH-AMS_WorkBench', Target 'MH-AMS_WorkBench': (DO NOT MODIFY !)
+CompilerVersion: 5060300::V5.06 update 3 (build 300)::ARMCC
+F (..\src\at32f421_int.c)(0x67619AA3)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_int.o --omf_browse .\objects\at32f421_int.crf --depend .\objects\at32f421_int.d)
+I (..\inc\at32f421_int.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\src\at32f421_wk_config.c)(0x67619AA3)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_wk_config.o --omf_browse .\objects\at32f421_wk_config.crf --depend .\objects\at32f421_wk_config.d)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\src\main.c)(0x67619C66)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (..\inc\delay.h)(0x675C3ED5)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (E:\Keil_v5\ARM\ARMCC\include\math.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\AMCU.h)(0x675A51C8)
+I (..\..\middlewares\dp_ams\BambuBus.h)(0x67614C89)
+F (..\src\wk_system.c)(0x67619AA3)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\wk_system.o --omf_browse .\objects\wk_system.crf --depend .\objects\wk_system.d)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\src\delay.c)(0x675C3EDA)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+I (..\inc\delay.h)(0x675C3ED5)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+F (..\src\flash.c)(0x676149E1)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\flash.o --omf_browse .\objects\flash.crf --depend .\objects\flash.d)
+I (..\inc\flash.h)(0x67613AEE)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+F (..\..\libraries\drivers\src\at32f421_crm.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_crm.o --omf_browse .\objects\at32f421_crm.crf --depend .\objects\at32f421_crm.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_tmr.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_tmr.o --omf_browse .\objects\at32f421_tmr.crf --depend .\objects\at32f421_tmr.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_gpio.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_gpio.o --omf_browse .\objects\at32f421_gpio.crf --depend .\objects\at32f421_gpio.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_usart.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_usart.o --omf_browse .\objects\at32f421_usart.crf --depend .\objects\at32f421_usart.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_pwc.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_pwc.o --omf_browse .\objects\at32f421_pwc.crf --depend .\objects\at32f421_pwc.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_debug.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_debug.o --omf_browse .\objects\at32f421_debug.crf --depend .\objects\at32f421_debug.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_flash.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_flash.o --omf_browse .\objects\at32f421_flash.crf --depend .\objects\at32f421_flash.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\drivers\src\at32f421_misc.c)(0x6759C462)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\at32f421_misc.o --omf_browse .\objects\at32f421_misc.crf --depend .\objects\at32f421_misc.d)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (..\..\libraries\cmsis\cm4\device_support\system_at32f421.c)(0x6759C461)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\system_at32f421.o --omf_browse .\objects\system_at32f421.crf --depend .\objects\system_at32f421.d)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+F (.\startup_at32f421.s)(0x67619AA3)(--cpu Cortex-M4 -g --apcs=interwork -IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7--pd "__UVISION_VERSION SETA 537" --pd "AT32F421K8U7 SETA 1"--list .\listings\startup_at32f421.lst --xref -o .\objects\startup_at32f421.o --depend .\objects\startup_at32f421.d)
+F (..\..\middlewares\CRC\src\CRC8.cpp)(0x675A585E)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\crc8.o --omf_browse .\objects\crc8.crf --depend .\objects\crc8.d)
+I (..\..\middlewares\CRC\src\CRC8.h)(0x675A5FDD)
+I (..\..\middlewares\CRC\src\CrcParameters.h)(0x675A5603)
+I (..\..\middlewares\CRC\src\CrcDefines.h)(0x675A5F0E)
+I (..\..\middlewares\Arduino\Arduino.h)(0x675A5F12)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\..\middlewares\CRC\src\CrcFastReverse.h)(0x675A6030)
+F (..\..\middlewares\CRC\src\CRC16.cpp)(0x675A5F66)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\crc16.o --omf_browse .\objects\crc16.crf --depend .\objects\crc16.d)
+I (..\..\middlewares\CRC\src\CRC16.h)(0x675A5FC6)
+I (..\..\middlewares\CRC\src\CrcParameters.h)(0x675A5603)
+I (..\..\middlewares\CRC\src\CrcDefines.h)(0x675A5F0E)
+I (..\..\middlewares\Arduino\Arduino.h)(0x675A5F12)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\..\middlewares\CRC\src\CrcFastReverse.h)(0x675A6030)
+F (..\..\middlewares\CRC\src\CrcFastReverse.cpp)(0x661803F4)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\crcfastreverse.o --omf_browse .\objects\crcfastreverse.crf --depend .\objects\crcfastreverse.d)
+I (..\..\middlewares\CRC\src\CrcFastReverse.h)(0x675A6030)
+I (..\..\middlewares\Arduino\Arduino.h)(0x675A5F12)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+F (..\..\middlewares\AS5600\MyiiC.c)(0x675C3FB2)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\myiic.o --omf_browse .\objects\myiic.crf --depend .\objects\myiic.d)
+I (..\..\middlewares\AS5600\MyiiC.h)(0x675C3FC5)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\inc\delay.h)(0x675C3ED5)
+F (..\..\middlewares\AS5600\AS5600.cpp)(0x67619C87)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\as5600.o --omf_browse .\objects\as5600.crf --depend .\objects\as5600.d)
+I (..\..\middlewares\AS5600\AS5600.h)(0x67613533)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (E:\Keil_v5\ARM\ARMCC\include\math.h)(0x574E3E26)
+I (..\..\middlewares\AS5600\MyiiC.h)(0x675C3FC5)
+F (..\..\middlewares\dp_ams\AMCU.cpp)(0x6761481E)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\amcu.o --omf_browse .\objects\amcu.crf --depend .\objects\amcu.d)
+I (..\..\middlewares\dp_ams\AMCU.h)(0x675A51C8)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\..\middlewares\dp_ams\BambuBus.h)(0x67614C89)
+I (..\..\middlewares\AS5600\AS5600.h)(0x67613533)
+I (E:\Keil_v5\ARM\ARMCC\include\math.h)(0x574E3E26)
+I (..\..\middlewares\AS5600\MyiiC.h)(0x675C3FC5)
+I (E:\Keil_v5\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (..\..\middlewares\CRC\src\CRC.h)(0x6761245E)
+I (..\..\middlewares\CRC\src\CrcParameters.h)(0x675A5603)
+I (..\..\middlewares\CRC\src\CRC8.h)(0x675A5FDD)
+I (..\..\middlewares\CRC\src\CrcDefines.h)(0x675A5F0E)
+I (..\..\middlewares\Arduino\Arduino.h)(0x675A5F12)
+I (..\..\middlewares\CRC\src\CRC12.h)(0x676141A3)
+I (..\..\middlewares\CRC\src\CRC16.h)(0x675A5FC6)
+I (..\..\middlewares\CRC\src\CRC32.h)(0x67614190)
+I (..\..\middlewares\CRC\src\CRC64.h)(0x676141AD)
+F (..\..\middlewares\dp_ams\BambuBus.cpp)(0x6761AAD7)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\bambubus.o --omf_browse .\objects\bambubus.crf --depend .\objects\bambubus.d)
+I (..\..\middlewares\dp_ams\BambuBus.h)(0x67614C89)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (E:\Keil_v5\ARM\ARMCC\include\string.h)(0x574E3E26)
+I (..\..\middlewares\CRC\src\CRC16.h)(0x675A5FC6)
+I (..\..\middlewares\CRC\src\CrcParameters.h)(0x675A5603)
+I (..\..\middlewares\CRC\src\CrcDefines.h)(0x675A5F0E)
+I (..\..\middlewares\Arduino\Arduino.h)(0x675A5F12)
+I (..\..\middlewares\CRC\src\CRC8.h)(0x675A5FDD)
+I (..\inc\flash.h)(0x67613AEE)
+F (..\..\middlewares\dp_ams\FIFO_buffer.c)(0x675C3C2E)(--c99 -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\fifo_buffer.o --omf_browse .\objects\fifo_buffer.crf --depend .\objects\fifo_buffer.d)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (E:\Keil_v5\ARM\ARMCC\include\string.h)(0x574E3E26)
+F (..\..\middlewares\dp_ams\time64.cpp)(0x67614992)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\time64.o --omf_browse .\objects\time64.crf --depend .\objects\time64.d)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+F (..\..\middlewares\dp_ams\USB_debug.cpp)(0x67614980)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork --split_sections -I ..\..\libraries\drivers\inc -I ..\..\libraries\cmsis\cm4\core_support -I ..\..\libraries\cmsis\cm4\device_support -I ..\inc -I ..\..\middlewares\dp_ams -I ..\..\middlewares\CRC\src -I ..\..\middlewares\Arduino -I ..\..\middlewares\AS5600 --cpp11-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7\Device\Include-IE:\Keil_v5\ARM\CMSIS\Include-IE:\Keil_v5\ARM\PACK\ArteryTek\AT32F421_DFP\2.1.7-D__UVISION_VERSION="537" -DAT32F421K8U7 -DAT32F421K8U7 -DUSE_STDPERIPH_DRIVER -DAT_START_F421_V1-o .\objects\usb_debug.o --omf_browse .\objects\usb_debug.crf --depend .\objects\usb_debug.d)
+I (..\..\middlewares\dp_ams\USB_debug.h)(0x675C3C62)
+I (..\..\middlewares\dp_ams\main.h)(0x675C3FC1)
+I (..\inc\at32f421_wk_config.h)(0x67619AA3)
+I (..\..\libraries\cmsis\cm4\device_support\at32f421.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\core_cm4.h)(0x6759C461)
+I (E:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x574E3E26)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_version.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_compiler.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\cmsis_armcc.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\core_support\mpu_armv7.h)(0x6759C461)
+I (..\..\libraries\cmsis\cm4\device_support\system_at32f421.h)(0x6759C461)
+I (..\..\libraries\drivers\inc\at32f421_def.h)(0x6759C462)
+I (..\inc\at32f421_conf.h)(0x67619AA3)
+I (..\..\libraries\drivers\inc\at32f421_crm.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_tmr.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_gpio.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_usart.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_pwc.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_debug.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_flash.h)(0x6759C462)
+I (..\..\libraries\drivers\inc\at32f421_misc.h)(0x6759C462)
+I (..\inc\wk_system.h)(0x67619AA3)
+I (E:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E3E26)
+I (E:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E3E26)
+I (..\..\middlewares\dp_ams\time64.h)(0x675A5236)
+I (..\..\middlewares\dp_ams\FIFO_buffer.h)(0x66534C77)
+I (E:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x574E3E26)
