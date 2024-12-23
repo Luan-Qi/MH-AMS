@@ -124,7 +124,8 @@ int main(void)
     /* add user code begin 3 */
 		
 		USB_debug_run();
-		AMCU_run();
+		//AMCU_run();
+		main_run();
 
     /* add user code end 3 */
   }

@@ -1,16 +1,8 @@
 #include "time64.h"
 
-uint64_t _time64_time_H=0;
-uint32_t _time64_time_L=0;
-uint64_t get_time64()
+bool millis_overstep(uint32_t set_time)
 {
-    //uint32_t T=millis();
-		uint32_t T=0;
-    if(T<_time64_time_L)
-    {
-        _time64_time_H+=0x100000000;
-    }
-    _time64_time_L=T;
-    return _time64_time_H|_time64_time_L;
+	uint32_t T = millis();
+	if(T>set_time) return TRUE;
+	else return FALSE;
 }
-

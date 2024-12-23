@@ -12,5 +12,7 @@
 #include "time64.h"
 //#define _Bambubus_DEBUG_mode_
 
+extern uint32_t millis();
+
 #endif
 

@@ -17,9 +17,15 @@ static __IO uint32_t fac_ms;
   */
 void delay_init(void)
 {
+	crm_clocks_freq_type crm_clocks;
+  uint32_t frequency = 0;
+  /* get crm_clocks */
+  crm_clocks_freq_get(&crm_clocks);
+
+  frequency = crm_clocks.ahb_freq;
   /* configure systick */
   systick_clock_source_config(SYSTICK_CLOCK_SOURCE_AHBCLK_NODIV);
-  fac_us = system_core_clock / (1000000U);
+  fac_us = frequency / (1000000U);
   fac_ms = fac_us * (1000U);
 }
 

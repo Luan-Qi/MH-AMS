@@ -310,7 +310,6 @@ bool package_check_crc16(uint8_t *data, int data_length)
 
 void package_send_with_crc(uint8_t *data, int data_length)
 {
-
     crc_8.restart();
     if (data[1] & 0x80)
     {
@@ -394,7 +393,7 @@ void Bambubus_long_package_send(long_packge_data *data)
 {
     packge_send_buf[0] = 0x3D;
     packge_send_buf[1] = 0x00;
-    data->package_length = data->data_length + 15;
+    data->package_length = data->data_length + 15; // 11字节包头长度+1字节数据长度+2字节CRC16
     memcpy(packge_send_buf + 2, data, 11);
     memcpy(packge_send_buf + 13, data->datas, data->data_length);
     package_send_with_crc(packge_send_buf, data->data_length + 15);
@@ -1005,7 +1004,7 @@ int BambuBus_run()
 {
     int stu=0;//online_wait
     static uint64_t time_set=200;
-    uint64_t timex=get_time64();
+    uint64_t timex=millis();
     if(timex>time_set)
     {
         stu=-1;//offline

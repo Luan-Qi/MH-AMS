@@ -303,6 +303,8 @@ void wk_tmr1_init(void)
    */
 
   /* add user code begin tmr1_init 2 */
+	
+	tmr_interrupt_enable(TMR1, TMR_OVF_INT, TRUE);
 
   /* add user code end tmr1_init 2 */
 }
@@ -519,6 +521,8 @@ void wk_tmr16_init(void)
    */
 
   /* add user code begin tmr16_init 2 */
+	
+	//tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 30);
 
   /* add user code end tmr16_init 2 */
 }
@@ -560,10 +564,10 @@ void wk_usart1_init(void)
   gpio_init(GPIOA, &gpio_init_struct);
 
   /* configure the RTS pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_1);
+  //gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_1);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
   gpio_init_struct.gpio_pins = GPIO_PINS_12;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
@@ -574,7 +578,7 @@ void wk_usart1_init(void)
   usart_receiver_enable(USART1, TRUE);
   usart_parity_selection_config(USART1, USART_PARITY_EVEN);
 
-  usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_RTS);
+  //usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_RTS);
 
   /**
    * Users need to configure USART1 interrupt functions according to the actual application.
@@ -591,6 +595,9 @@ void wk_usart1_init(void)
   usart_enable(USART1, TRUE);
 
   /* add user code begin usart1_init 3 */
+	
+	usart_interrupt_enable(USART1, USART_RDBF_INT, TRUE);
+	gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
 
   /* add user code end usart1_init 3 */
 }
@@ -632,7 +639,7 @@ void wk_usart2_init(void)
   gpio_init(GPIOA, &gpio_init_struct);
 
   /* configure param */
-  usart_init(USART2, 115200, USART_DATA_8BITS, USART_STOP_1_BIT);
+  usart_init(USART2, 1228800, USART_DATA_8BITS, USART_STOP_1_BIT);
   usart_transmitter_enable(USART2, TRUE);
   usart_receiver_enable(USART2, TRUE);
   usart_parity_selection_config(USART2, USART_PARITY_NONE);

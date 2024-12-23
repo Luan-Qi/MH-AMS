@@ -3,11 +3,12 @@
 
 #include "main.h"
 
-#define IIC_CRM					CRM_GPIOB_PERIPH_CLOCK
-#define IIC_GPIO				GPIOB
-#define IIC_SCL_PIN			GPIO_PINS_6
-#define IIC_SDA_PIN			GPIO_PINS_7
-#define sda_index				7
+#define IIC_CRM					CRM_GPIOF_PERIPH_CLOCK
+#define IIC_SCL_GPIO		GPIOA
+#define IIC_SCL_PIN			GPIO_PINS_15
+#define IIC_SDA_GPIO		GPIOB
+#define IIC_SDA_PIN			GPIO_PINS_3
+#define sda_index				3
 
 void SDA_IN(void);
 void SDA_OUT(void);

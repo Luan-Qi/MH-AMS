@@ -141,8 +141,8 @@
         <PinSub pinname="PB8" signalname="TMR16_CH1" signaltype="3"/>
     </PINInfo>
     <ProjectInfomation>
-        <ProjectName>DP-AMS_WorkBench</ProjectName>
-        <ProjectLocation>D:/Users/Desktop/Study/MySTM/FUN/DP-AMS/Software</ProjectLocation>
+        <ProjectName>MH-AMS_WorkBench</ProjectName>
+        <ProjectLocation>D:/Users/Desktop/Study/MySTM/FUN/MH-AMS/Software/MH-AMS</ProjectLocation>
         <ToolchainIDE>MDK_V5</ToolchainIDE>
         <KeepUserCode>true</KeepUserCode>
         <NotUsedPinAnalog>false</NotUsedPinAnalog>

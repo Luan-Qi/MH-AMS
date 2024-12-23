@@ -16,8 +16,10 @@ extern "C"
 #define AMCU_AS5600_SDA 2
 #define AMCU_AS5600_SCL 3
 
-    extern void AMCU_init();
-    extern void AMCU_run();
+extern void AMCU_init();
+extern void AMCU_run();
+
+void main_run();
 #ifdef __cplusplus
 }
 #endif

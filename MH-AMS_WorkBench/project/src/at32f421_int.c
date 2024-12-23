@@ -60,6 +60,13 @@
 /* private user code ---------------------------------------------------------*/
 /* add user code begin 0 */
 
+uint32_t system_time = 0;
+
+uint32_t millis()
+{
+	return system_time;
+}
+
 /* add user code end 0 */
 
 /* external variables ---------------------------------------------------------*/
@@ -234,6 +241,12 @@ void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void)
 
 
   /* add user code begin TMR1_BRK_OVF_TRG_HALL_IRQ 1 */
+	
+	if(tmr_interrupt_flag_get(TMR1, TMR_OVF_FLAG) != RESET)
+  {
+		system_time++;
+		tmr_flag_clear(TMR1, TMR_OVF_FLAG);
+  }
 
   /* add user code end TMR1_BRK_OVF_TRG_HALL_IRQ 1 */
 }
@@ -298,6 +311,16 @@ void USART1_IRQHandler(void)
 
   /* add user code end USART1_IRQ 0 */
   /* add user code begin USART1_IRQ 1 */
+	
+	uint16_t tmp;
+
+  if(usart_interrupt_flag_get(USART1, USART_RDBF_FLAG) != RESET)
+  {
+    tmp = usart_data_receive(USART1);
+		while(usart_flag_get(USART2, USART_TDBE_FLAG) == RESET){};
+    usart_data_transmit(USART2, tmp);
+		while(usart_flag_get(USART2, USART_TDC_FLAG) == RESET){};
+  }
 
   /* add user code end USART1_IRQ 1 */
 }

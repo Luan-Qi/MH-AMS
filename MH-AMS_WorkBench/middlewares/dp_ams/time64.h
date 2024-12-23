@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-extern uint64_t get_time64();
+bool millis_overstep(uint32_t set_time);
 
 #endif
 

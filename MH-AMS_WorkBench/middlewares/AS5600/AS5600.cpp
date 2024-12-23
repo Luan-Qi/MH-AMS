@@ -67,7 +67,18 @@ bool AS5600::begin(uint8_t directionPin)
 
 bool AS5600::isConnected()
 {
-	return 1;
+	uint8_t magStatus;
+  bool retVal = false;
+  /*0 0 MD ML MH 0 0 0*/
+  /* MD high = AGC minimum overflow, Magnet to strong */
+  /* ML high = AGC Maximum overflow, magnet to weak*/ 
+  /* MH high = magnet detected*/ 
+  magStatus = AS5600::readStatus();
+  
+  if(magStatus & 0x20)
+    retVal = true; 
+  
+  return retVal;
 }
 
 
@@ -529,11 +540,9 @@ uint8_t AS5600::AS5600_Read8(uint8_t dev_addr, uint8_t reg_addr, uint8_t i2c_len
 	while (i2c_len)
 	{
 		if(i2c_len==1){*i2c_data_buf =IIC_Read_Byte(0);}
-		else {
-			*i2c_data_buf = IIC_Read_Byte(1);
-			i2c_data_buf++;
-			i2c_len--;
-		}
+		else *i2c_data_buf = IIC_Read_Byte(1);
+		i2c_data_buf++;
+		i2c_len--;
 	}
 	IIC_Stop();
 	return 0x00;
