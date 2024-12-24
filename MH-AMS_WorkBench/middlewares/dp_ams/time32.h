@@ -1,5 +1,5 @@
-#ifndef __TIME_64__
-#define __TIME_64__
+#ifndef __TIME_32__
+#define __TIME_32__
 
 #include "main.h"
 

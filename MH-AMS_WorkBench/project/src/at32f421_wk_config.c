@@ -147,6 +147,9 @@ void wk_system_clock_config(void)
   */
 void wk_periph_clock_config(void)
 {
+  /* enable dma1 periph clock */
+  crm_periph_clock_enable(CRM_DMA1_PERIPH_CLOCK, TRUE);
+
   /* enable gpioa periph clock */
   crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
 
@@ -155,6 +158,9 @@ void wk_periph_clock_config(void)
 
   /* enable gpiof periph clock */
   crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, TRUE);
+
+  /* enable scfg periph clock */
+  crm_periph_clock_enable(CRM_SCFG_PERIPH_CLOCK, TRUE);
 
   /* enable tmr1 periph clock */
   crm_periph_clock_enable(CRM_TMR1_PERIPH_CLOCK, TRUE);
@@ -227,35 +233,36 @@ void wk_gpio_config(void)
   gpio_init(GPIOB, &gpio_init_struct);
 
   /* gpio output config */
-  gpio_bits_reset(GPIOF, GPIO_PINS_0 | GPIO_PINS_1);
-  gpio_bits_reset(GPIOA, GPIO_PINS_15);
-  gpio_bits_reset(GPIOB, GPIO_PINS_3 | GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7);
+  gpio_bits_set(GPIOF, GPIO_PINS_0 | GPIO_PINS_1);
+  gpio_bits_set(GPIOA, GPIO_PINS_15);
+  gpio_bits_set(GPIOB, GPIO_PINS_3);
+  gpio_bits_reset(GPIOB, GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
   gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_0;
+  gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_1;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOF, &gpio_init_struct);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
   gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_1;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOF, &gpio_init_struct);
-
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
   gpio_init_struct.gpio_pins = GPIO_PINS_15;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_3;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOB, &gpio_init_struct);
+
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_3 | GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7;
+  gpio_init_struct.gpio_pins = GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
 
@@ -564,10 +571,10 @@ void wk_usart1_init(void)
   gpio_init(GPIOA, &gpio_init_struct);
 
   /* configure the RTS pin */
-  //gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_1);
+  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_1);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
   gpio_init_struct.gpio_pins = GPIO_PINS_12;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
@@ -578,7 +585,7 @@ void wk_usart1_init(void)
   usart_receiver_enable(USART1, TRUE);
   usart_parity_selection_config(USART1, USART_PARITY_EVEN);
 
-  //usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_RTS);
+  usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_RTS);
 
   /**
    * Users need to configure USART1 interrupt functions according to the actual application.
@@ -663,6 +670,58 @@ void wk_usart2_init(void)
   /* add user code begin usart2_init 3 */
 
   /* add user code end usart2_init 3 */
+}
+
+/**
+  * @brief  init dma1 channel1 for "memtomem"
+  * @param  none
+  * @retval none
+  */
+void wk_dma1_channel1_init(void)
+{
+  /* add user code begin dma1_channel1 0 */
+
+  /* add user code end dma1_channel1 0 */
+
+  dma_init_type dma_init_struct;
+
+  dma_reset(DMA1_CHANNEL1);
+  dma_default_para_init(&dma_init_struct);
+  dma_init_struct.direction = DMA_DIR_MEMORY_TO_MEMORY;
+  dma_init_struct.memory_data_width = DMA_MEMORY_DATA_WIDTH_BYTE;
+  dma_init_struct.memory_inc_enable = TRUE;
+  dma_init_struct.peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_BYTE;
+  dma_init_struct.peripheral_inc_enable = TRUE;
+  dma_init_struct.priority = DMA_PRIORITY_LOW;
+  dma_init_struct.loop_mode_enable = FALSE;
+  dma_init(DMA1_CHANNEL1, &dma_init_struct);
+
+  /* add user code begin dma1_channel1 1 */
+
+  /* add user code end dma1_channel1 1 */
+}
+
+/**
+  * @brief  config dma channel transfer parameter
+  * @param  dmax_channely: DMAx_CHANNELy
+  * @param  peripheral_base_addr: peripheral address.
+  * @param  memory_base_addr: memory address.
+  * @param  buffer_size: buffer size.
+  * @retval none
+  */
+void wk_dma_channel_config(dma_channel_type* dmax_channely, uint32_t peripheral_base_addr, uint32_t memory_base_addr, uint16_t buffer_size)
+{
+  /* add user code begin dma_channel_config 0 */
+
+  /* add user code end dma_channel_config 0 */
+
+  dmax_channely->dtcnt = buffer_size;
+  dmax_channely->paddr = peripheral_base_addr;
+  dmax_channely->maddr = memory_base_addr;
+
+  /* add user code begin dma_channel_config 1 */
+
+  /* add user code end dma_channel_config 1 */
 }
 
 /* add user code begin 1 */

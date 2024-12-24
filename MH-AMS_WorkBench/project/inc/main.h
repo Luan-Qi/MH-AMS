@@ -2,17 +2,20 @@
 #define __MAIN_H__
 
 #include "at32f421_wk_config.h"
-#include "wk_system.h"
 
-//#include <Arduino.h>
-#include "stdlib.h"
 #include "stdio.h"
-//#include <watchdog.h>
+#include "stdlib.h"
+#include "stdbool.h"
 #include "USB_debug.h"
-#include "time64.h"
+#include "time32.h"
+//#include "i2c_application.h"
 //#define _Bambubus_DEBUG_mode_
+#define I2C_TIMEOUT 100
+
+#define channel_max 4
 
 extern uint32_t millis();
+//extern i2c_handle_type hi2cx;
 
 #endif
 

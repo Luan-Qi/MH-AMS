@@ -48,18 +48,10 @@ const uint8_t AS5600_MAGNET_LOW    = 0x10;
 const uint8_t AS5600_MAGNET_DETECT = 0x20;
 
 
-bool AS5600::begin(uint8_t directionPin)
+bool AS5600::begin()
 {
-	IIC_Init();
-  _directionPin = directionPin;
-  if (_directionPin != AS5600_SW_DIRECTION_PIN)
-  {
-    return false;
-  }
+	I2C.IIC_Init();
   setDirection(AS5600_CLOCK_WISE);
-	
-	IIC_Init();
-
   if (! isConnected()) return false;
   return true;
 }
@@ -67,18 +59,12 @@ bool AS5600::begin(uint8_t directionPin)
 
 bool AS5600::isConnected()
 {
-	uint8_t magStatus;
-  bool retVal = false;
-  /*0 0 MD ML MH 0 0 0*/
+	/*0 0 MD ML MH 0 0 0*/
   /* MD high = AGC minimum overflow, Magnet to strong */
   /* ML high = AGC Maximum overflow, magnet to weak*/ 
   /* MH high = magnet detected*/ 
-  magStatus = AS5600::readStatus();
-  
-  if(magStatus & 0x20)
-    retVal = true; 
-  
-  return retVal;
+	if(AS5600::detectMagnet()) return true;
+  return false;
 }
 
 
@@ -390,7 +376,8 @@ uint16_t AS5600::readMagnitude()
 
 bool AS5600::detectMagnet()
 {
-  return (readStatus() & AS5600_MAGNET_DETECT) > 1;
+  //return (readStatus() & AS5600_MAGNET_DETECT) > 1;
+	return readStatus() <= 0x38;
 }
 
 
@@ -527,43 +514,44 @@ int AS5600::lastError()
 
 uint8_t AS5600::AS5600_Read8(uint8_t dev_addr, uint8_t reg_addr, uint8_t i2c_len, uint8_t *i2c_data_buf)
 {
-	IIC_Start();
-	IIC_Send_Byte(dev_addr << 1 | I2C1_Direction_Transmitter);
-	IIC_Wait_Ack();
-	IIC_Send_Byte(reg_addr);
-	IIC_Wait_Ack();
+	//i2c_memory_read(&hi2cx, I2C_MEM_ADDR_WIDIH_8, dev_addr<<1, reg_addr, i2c_data_buf, i2c_len, 1000);
+	I2C.IIC_Start();
+	I2C.IIC_Send_Byte(dev_addr << 1 | I2C1_Direction_Transmitter);
+	if(I2C.IIC_Wait_Ack()!=0) return 1;
+	I2C.IIC_Send_Byte(reg_addr);
+	if(I2C.IIC_Wait_Ack()!=0) return 1;
 	//IIC_Stop();
 	
-	IIC_Start();
-	IIC_Send_Byte(reg_addr << 1 | I2C1_Direction_Receiver);
-	IIC_Wait_Ack();
+	I2C.IIC_Start();
+	I2C.IIC_Send_Byte(dev_addr << 1 | I2C1_Direction_Receiver);
+	if(I2C.IIC_Wait_Ack()!=0) return 1;
 	while (i2c_len)
 	{
-		if(i2c_len==1){*i2c_data_buf =IIC_Read_Byte(0);}
-		else *i2c_data_buf = IIC_Read_Byte(1);
+		if(i2c_len==1){*i2c_data_buf =I2C.IIC_Read_Byte(0);}
+		else *i2c_data_buf = I2C.IIC_Read_Byte(1);
 		i2c_data_buf++;
 		i2c_len--;
 	}
-	IIC_Stop();
+	I2C.IIC_Stop();
 	return 0x00;
 }
 
 uint8_t AS5600::AS5600_Write8(uint8_t dev_addr, uint8_t reg_addr, uint8_t i2c_len, uint8_t *i2c_data_buf)
 {
 	uint8_t i;
-	IIC_Start();
-	IIC_Send_Byte(dev_addr << 1 | I2C1_Direction_Transmitter);
-	IIC_Wait_Ack();
-	IIC_Send_Byte(reg_addr);
-	IIC_Wait_Ack();
+	I2C.IIC_Start();
+	I2C.IIC_Send_Byte(dev_addr << 1 | I2C1_Direction_Transmitter);
+	I2C.IIC_Wait_Ack();
+	I2C.IIC_Send_Byte(reg_addr);
+	I2C.IIC_Wait_Ack();
 	
 	//IIC_Start();
 	for (i=0; i<i2c_len; i++)
 	{
-		IIC_Send_Byte(i2c_data_buf[i]);
-		IIC_Wait_Ack();
+		I2C.IIC_Send_Byte(i2c_data_buf[i]);
+		I2C.IIC_Wait_Ack();
 	}
-	IIC_Stop();	
+	I2C.IIC_Stop();	
 	return 0;
 }
 

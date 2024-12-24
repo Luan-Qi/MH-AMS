@@ -370,7 +370,6 @@ void package_send_with_crc_debug(uint8_t *data, int data_length)
     data[(data_length + 1)] = num >> 8;
     data_length += 2;
     send_uart(data, data_length);
-    DEBUG_num(data, data_length);
 }
 
 uint8_t packge_send_buf[1000];

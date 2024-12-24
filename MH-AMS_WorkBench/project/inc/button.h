@@ -16,7 +16,9 @@
 #define BUTTON_UP 	gpio_input_data_bit_read(BUTTON_UP_GPIO, BUTTON_UP_PIN)
 #define BUTTON_DOWN gpio_input_data_bit_read(BUTTON_DOWN_GPIO, BUTTON_DOWN_PIN)
 
-void button_run();
+void button_test_run();
+void motor_init();
+void button_main_run();
 
 #endif
 

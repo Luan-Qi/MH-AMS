@@ -339,7 +339,7 @@
               <MiscControls>--cpp11</MiscControls>
               <Define>AT32F421K8U7,USE_STDPERIPH_DRIVER,AT_START_F421_V1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\drivers\inc;..\..\libraries\cmsis\cm4\core_support;..\..\libraries\cmsis\cm4\device_support;..\inc;..\..\middlewares\dp_ams;..\..\middlewares\CRC\src;..\..\middlewares\Arduino;..\..\middlewares\AS5600</IncludePath>
+              <IncludePath>..\..\libraries\drivers\inc;..\..\libraries\cmsis\cm4\core_support;..\..\libraries\cmsis\cm4\device_support;..\inc;..\..\middlewares\dp_ams;..\..\middlewares\CRC\src;..\..\middlewares\Arduino;..\..\middlewares\AS5600;..\..\middlewares\i2c_application_library;..\..\middlewares\PID</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -399,11 +399,6 @@
               <FilePath>..\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>wk_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\wk_system.c</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\delay.c</FilePath>
@@ -449,6 +444,11 @@
               <FilePath>..\..\libraries\drivers\src\at32f421_pwc.c</FilePath>
             </File>
             <File>
+              <FileName>at32f421_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\src\at32f421_dma.c</FilePath>
+            </File>
+            <File>
               <FileName>at32f421_debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\src\at32f421_debug.c</FilePath>
@@ -462,6 +462,11 @@
               <FileName>at32f421_misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\src\at32f421_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>at32f421_scfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\src\at32f421_scfg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -499,14 +504,19 @@
               <FilePath>..\..\middlewares\CRC\src\CrcFastReverse.cpp</FilePath>
             </File>
             <File>
-              <FileName>MyiiC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\middlewares\AS5600\MyiiC.c</FilePath>
+              <FileName>MyiiC.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\middlewares\AS5600\MyiiC.cpp</FilePath>
             </File>
             <File>
               <FileName>AS5600.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\middlewares\AS5600\AS5600.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\PID\pid.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -514,9 +524,9 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>AMCU.cpp</FileName>
+              <FileName>MH_MCU.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\middlewares\dp_ams\AMCU.cpp</FilePath>
+              <FilePath>..\..\middlewares\dp_ams\MH_MCU.cpp</FilePath>
             </File>
             <File>
               <FileName>BambuBus.cpp</FileName>
@@ -529,14 +539,24 @@
               <FilePath>..\..\middlewares\dp_ams\FIFO_buffer.c</FilePath>
             </File>
             <File>
-              <FileName>time64.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\middlewares\dp_ams\time64.cpp</FilePath>
+              <FileName>beep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\dp_ams\beep.c</FilePath>
             </File>
             <File>
-              <FileName>USB_debug.cpp</FileName>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\dp_ams\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>time32.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\middlewares\dp_ams\USB_debug.cpp</FilePath>
+              <FilePath>..\..\middlewares\dp_ams\time32.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USB_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\dp_ams\USB_debug.c</FilePath>
             </File>
           </Files>
         </Group>

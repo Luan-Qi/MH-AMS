@@ -1,20 +1,22 @@
-#include "AMCU.h"
-#include "AS5600.h"
+#include "MH_MCU.h"
 #include <string.h>
 #include "button.h"
+#include "beep.h"
+#include "motor.h"
 
 #define max_filament_num 16
 
-AS5600 as5600; //  use default Wire
+AS5600 as5600(IIC1_SCL_GPIO, IIC1_SCL_PIN, IIC1_SDA_GPIO, IIC1_SDA_PIN);
+AS5600 as5600_2(IIC2_SCL_GPIO, IIC2_SCL_PIN, IIC2_SDA_GPIO, IIC2_SDA_PIN);
+
 double distance_count = 0;
 bool if_as5600_init = false;
+bool if_system_init = false;
 bool AMCU_bus_need_to_waiting_slave[max_filament_num];
 
 void AS5600_init()
 {
-	uint8_t status = 0;
-	as5600.begin(255);
-	status = as5600.readStatus();
+	if(as5600.begin()&&as5600_2.begin()) if_system_init = true;
 }
 
 #define AS5600_PI 3.1415926535897932384626433832795
@@ -192,41 +194,41 @@ uint8_t AMCU_bus_send_read_motion_str[] = {0x3D, 0x00, 0x00, 0x09, 0x00, 0x01, 0
 
 void AMCU_bus_send_set_motion()
 {
-    char ADRx = get_now_filament_num();
-    
-    static enum AMCU_bus_motion_type last_motion = AMCU_bus_motion_end_pull_back;
+//    char ADRx = get_now_filament_num();
+//    
+//    static enum AMCU_bus_motion_type last_motion = AMCU_bus_motion_end_pull_back;
 
-    for (int i = 0; i < max_filament_num; i++)
-    {
-        if ((AMCU_bus_need_to_waiting_slave[i] == true) && (i != ADRx))
-        {
-            return;
-        }
-    }
+//    for (int i = 0; i < max_filament_num; i++)
+//    {
+//        if ((AMCU_bus_need_to_waiting_slave[i] == true) && (i != ADRx))
+//        {
+//            return;
+//        }
+//    }
 
-    switch (get_filament_motion(ADRx))
-    {
-    case need_pull_back:
-        motion = AMCU_bus_motion_need_pull_back;
-        break;
-    case need_send_out:
-        motion = AMCU_bus_motion_need_send_out;
-        break;
-    case waiting:
-        if (last_motion == AMCU_bus_motion_need_pull_back)
-            motion = AMCU_bus_motion_end_pull_back;
-        else if (last_motion == AMCU_bus_motion_need_send_out)
-            motion = AMCU_bus_motion_end_send_out;
-        else
-            motion = last_motion;
-        break;
-    }
-    last_motion = motion;
+//    switch (get_filament_motion(ADRx))
+//    {
+//    case need_pull_back:
+//        motion = AMCU_bus_motion_need_pull_back;
+//        break;
+//    case need_send_out:
+//        motion = AMCU_bus_motion_need_send_out;
+//        break;
+//    case waiting:
+//        if (last_motion == AMCU_bus_motion_need_pull_back)
+//            motion = AMCU_bus_motion_end_pull_back;
+//        else if (last_motion == AMCU_bus_motion_need_send_out)
+//            motion = AMCU_bus_motion_end_send_out;
+//        else
+//            motion = last_motion;
+//        break;
+//    }
+//    last_motion = motion;
 
-    AMCU_bus_send_read_motion_str[2] = ADRx;
-    AMCU_bus_send_read_motion_str[6] = motion;
-    DEBUG_num(AMCU_bus_send_read_motion_str,sizeof(AMCU_bus_send_read_motion_str));
-    AMCU_bus_send_packge_with_CRC(AMCU_bus_send_read_motion_str, sizeof(AMCU_bus_send_read_motion_str));
+//    AMCU_bus_send_read_motion_str[2] = ADRx;
+//    AMCU_bus_send_read_motion_str[6] = motion;
+//    DEBUG_num(AMCU_bus_send_read_motion_str,sizeof(AMCU_bus_send_read_motion_str));
+//    AMCU_bus_send_packge_with_CRC(AMCU_bus_send_read_motion_str, sizeof(AMCU_bus_send_read_motion_str));
 }
 
 void AMCU_bus_deal_set_motion_res(uint8_t *data, int data_length)
@@ -349,57 +351,24 @@ void AMCU_bus_init()
     //AMCU_bus_ticker.attach(&AMCU_timer_handler, std::chrono::milliseconds(100)); // 0.01s=10ms
 }
 
-void AMCU_init()
+void MH_MCU_init()
 {
-    AMCU_bus_init();
-    AS5600_init();
-    //BambuBus_init();
+	AS5600_init();
+	motor_pid_init(as5600.readAngle());
+	//BambuBus_init();
+	printf("inittttttttttttttttt\r\n");
 }
 
-uint8_t beep_busy = 0;
-uint8_t beep_queen[10] = {0};
+uint32_t AS5600_time = 0;
 
-void beep_set(uint8_t set)
+void AS5600_run()
 {
-	if(set!=0) tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 10);
-	else tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 0);
-}
-
-bool beep_request(uint8_t times, uint8_t delay_on, uint8_t delay_down)
-{
-	if(beep_busy>0) return FALSE;
-	if(times>4) return FALSE;
-	
-	uint8_t ptr = 1;
-	beep_busy = 1;
-	beep_queen[0] = delay_on;
-	beep_queen[9] = (times - 1) * 2 + 1;
-	while(times>1)
+	if(millis_overstep(AS5600_time))
 	{
-		beep_queen[ptr] = delay_down;
-		beep_queen[ptr+1] = delay_on;
-		ptr+=2;times--;
-	}
-	return TRUE;
-}
-
-void beep_run()
-{
-	static uint32_t beep_time = 0;
-	if(beep_busy==0) return;
-	
-	if(millis_overstep(beep_time))
-	{
-		if(beep_queen[9]==0){beep_set(0);beep_busy = 0;return;}
-		switch(beep_queen[9]%2)
-		{
-			case 0:beep_set(0);break;
-			case 1:beep_set(1);break;
-		}
-		
-		beep_busy++;
-		beep_time = millis() + beep_queen[beep_busy-2];
-		beep_queen[9]--;
+		AS5600_time = millis() + 250;
+		uint16_t angle_1 = as5600.readAngle();
+		uint16_t angle_2 = as5600_2.readAngle();
+		//printf("angle_1=%d angle_2=%d\r\n", angle_1, angle_2);
 	}
 }
 
@@ -410,10 +379,13 @@ void main_run()
 	if(millis_overstep(request_time))
 	{
 		request_time = millis() + 1000;
-		beep_request(4, 50, 50);
+		if(if_system_init==true) beep_request(4, 50, 50);
+		else beep_request(1, 50, 50);
 	}
-	//beep_run();
-	button_run();
+	beep_run();
+	button_main_run();
+	AS5600_run();
+	motor_run();
 }
 
 

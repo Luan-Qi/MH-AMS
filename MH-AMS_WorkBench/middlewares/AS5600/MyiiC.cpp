@@ -1,38 +1,54 @@
 #include "MyiiC.h"
 #include "delay.h"
 
-void SDA_IN(void)
+
+void IIC::SDA_IN(void)
 {
 	IIC_SDA_GPIO->cfgr  &= (uint32_t)~(0x03 << (sda_index * 2));
   IIC_SDA_GPIO->cfgr  |= (uint32_t)(0x00 << (sda_index * 2));
 }
 
-void SDA_OUT(void)
+void IIC::SDA_OUT(void)
 {
 	IIC_SDA_GPIO->cfgr  &= (uint32_t)~(0x03 << (sda_index * 2));
   IIC_SDA_GPIO->cfgr  |= (uint32_t)(0x01 << (sda_index * 2));
 }
 
-void scl_bits_write(uint8_t bits)
+void IIC::scl_bits_write(uint8_t bits)
 {
 	if(bits==1) gpio_bits_write(IIC_SCL_GPIO, IIC_SCL_PIN, TRUE);
 	else gpio_bits_write(IIC_SCL_GPIO, IIC_SCL_PIN, FALSE);
 }
 
-void sda_bits_write(uint8_t bits)
+void IIC::sda_bits_write(uint8_t bits)
 {
 	if(bits==1) gpio_bits_write(IIC_SDA_GPIO, IIC_SDA_PIN, TRUE);
 	else gpio_bits_write(IIC_SDA_GPIO, IIC_SDA_PIN, FALSE);
 }
 
-uint8_t sda_bits_read(void)
+uint8_t IIC::sda_bits_read(void)
 {
 	if(gpio_input_data_bit_read(IIC_SDA_GPIO, IIC_SDA_PIN)==RESET) return 0;
 	else return 1;
 }
 
+void delay_IIC(uint32_t delay)
+{
+	while(--delay);	//dly=100: 8.75us; dly=100: 85.58 us (SYSCLK=72MHz)
+}
+
+IIC::IIC(gpio_type * SCL_GPIO, uint16_t SCL_PIN, gpio_type * SDA_GPIO, uint16_t SDA_PIN)
+{
+	sda_index = 0;
+	IIC_SCL_GPIO = SCL_GPIO;
+	IIC_SCL_PIN = SCL_PIN;
+	IIC_SDA_GPIO = SDA_GPIO;
+	IIC_SDA_PIN = SDA_PIN;
+	while((SDA_PIN & 0x0001) == 0){sda_index++;SDA_PIN = SDA_PIN >> 1;}
+}
+
 //初始化IIC
-void IIC_Init(void)
+void IIC::IIC_Init(void)
 {			
 //  gpio_init_type gpio_init_struct;
 //	/* enable the led clock */
@@ -50,40 +66,40 @@ void IIC_Init(void)
 	sda_bits_write(1);
 }
 //产生IIC起始信号
-void IIC_Start(void)
+void IIC::IIC_Start(void)
 {
 	SDA_OUT();     //sda线输出
 	sda_bits_write(1);	  	  
 	scl_bits_write(1);
-	delay_us(40);
+	delay_us(2);
  	sda_bits_write(0);//START:when CLK is high,DATA change form high to low 
-	delay_us(40);
+	delay_us(2);
 	scl_bits_write(0);//钳住I2C总线，准备发送或接收数据 
 }	  
 //产生IIC停止信号
-void IIC_Stop(void)
+void IIC::IIC_Stop(void)
 {
 	SDA_OUT();//sda线输出
 	scl_bits_write(0);
 	sda_bits_write(0);//STOP:when CLK is high DATA change form low to high
- 	delay_us(40);
+ 	delay_us(2);
 	scl_bits_write(1);
 	sda_bits_write(1);//发送I2C总线结束信号
-	delay_us(40);							   	
+	delay_us(2);							   	
 }
 //等待应答信号到来
 //返回值：1，接收应答失败
 //        0，接收应答成功
-uint8_t IIC_Wait_Ack(void)
+uint8_t IIC::IIC_Wait_Ack(void)
 {
 	uint16_t ucErrTime=0;
 	SDA_IN();      //SDA设置为输入  
-	sda_bits_write(1);delay_us(10);	   
-	scl_bits_write(1);delay_us(10);	 
+	sda_bits_write(1);delay_us(2);	   
+	scl_bits_write(1);delay_us(2);	 
 	while(sda_bits_read())
 	{
 		ucErrTime++;
-		if(ucErrTime>2500)
+		if(ucErrTime>100)
 		{
 			IIC_Stop();
 			return 1;
@@ -93,32 +109,32 @@ uint8_t IIC_Wait_Ack(void)
 	return 0;  
 } 
 //产生ACK应答
-void IIC_Ack(void)
+void IIC::IIC_Ack(void)
 {
 	scl_bits_write(0);
 	SDA_OUT();
 	sda_bits_write(0);
-	delay_us(20);
+	delay_us(2);
 	scl_bits_write(1);
-	delay_us(20);
+	delay_us(2);
 	scl_bits_write(0);
 }
 //不产生ACK应答		    
-void IIC_NAck(void)
+void IIC::IIC_NAck(void)
 {
 	scl_bits_write(0);
 	SDA_OUT();
 	sda_bits_write(1);
-	delay_us(20);
+	delay_us(2);
 	scl_bits_write(1);
-	delay_us(20);
+	delay_us(2);
 	scl_bits_write(0);
 }					 				     
 //IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答			  
-void IIC_Send_Byte(uint8_t txd)
+void IIC::IIC_Send_Byte(uint8_t txd)
 {                        
   uint8_t t;   
 	SDA_OUT(); 	    
@@ -127,26 +143,26 @@ void IIC_Send_Byte(uint8_t txd)
   {              
     sda_bits_write((txd&0x80)>>7);
     txd<<=1; 	  
-		delay_us(20);   //对TEA5767这三个延时都是必须的
+		delay_us(2);   //对TEA5767这三个延时都是必须的
 		scl_bits_write(1);
-		delay_us(20); 
+		delay_us(2); 
 		scl_bits_write(0);
-		delay_us(20);
+		delay_us(2);
   }	 
 } 	    
 //读1个字节，ack=1时，发送ACK，ack=0，发送nACK   
-uint8_t IIC_Read_Byte(unsigned char ack)
+uint8_t IIC::IIC_Read_Byte(unsigned char ack)
 {
 	unsigned char i,receive=0;
 	SDA_IN();//SDA设置为输入
   for(i=0;i<8;i++ )
 	{
     scl_bits_write(0);;
-    delay_us(20);
+    delay_us(2);
 		scl_bits_write(1);
     receive<<=1;
     if(sda_bits_read())receive++;   
-		delay_us(10); 
+		delay_us(2); 
   }					 
   if (!ack)
       IIC_NAck();//发送nACK

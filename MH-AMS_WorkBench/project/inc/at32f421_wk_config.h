@@ -57,9 +57,9 @@ extern "C" {
 
 /* add user code begin dma define */
 /* user can only modify the dma define value */
-//#define DMA1_CHANNEL1_BUFFER_SIZE   0
-//#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
-//#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
+#define DMA1_CHANNEL1_BUFFER_SIZE   0
+#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
+#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
 
 //#define DMA1_CHANNEL2_BUFFER_SIZE   0
 //#define DMA1_CHANNEL2_MEMORY_BASE_ADDR   0
@@ -105,6 +105,13 @@ extern "C" {
 
   /* init usart2 function. */
   void wk_usart2_init(void);
+
+  /* init dma1 channel1 */
+  void wk_dma1_channel1_init(void);
+
+  /* config dma channel transfer parameter */
+  /* user need to modify parameters memory_base_addr and buffer_size */
+  void wk_dma_channel_config(dma_channel_type* dmax_channely, uint32_t peripheral_base_addr, uint32_t memory_base_addr, uint16_t buffer_size);
 
 /* add user code begin exported functions */
 

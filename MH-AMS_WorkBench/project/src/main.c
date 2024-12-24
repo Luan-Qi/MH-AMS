@@ -26,14 +26,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "at32f421_wk_config.h"
-#include "wk_system.h"
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 
 #include "delay.h"
 #include "math.h"
-#include "AMCU.h"
+#include "MH_MCU.h"
+#include "button.h"
 
 /* add user code end private includes */
 
@@ -57,6 +57,8 @@
 
 extern double distance_count;
 extern void AMCU_bus_run();
+
+//i2c_handle_type hi2cx;
 
 /* add user code end private variables */
 
@@ -90,8 +92,15 @@ int main(void)
   /* nvic config. */
   wk_nvic_config();
 
-  /* timebase config. */
-  //wk_timebase_init();
+  /* init dma1 channel1 */
+  wk_dma1_channel1_init();
+  /* config dma channel transfer parameter */
+  /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
+  wk_dma_channel_config(DMA1_CHANNEL1, 
+                        DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR, 
+                        DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
+                        DMA1_CHANNEL1_BUFFER_SIZE);
+  dma_channel_enable(DMA1_CHANNEL1, TRUE);
 
   /* init usart1 function. */
   wk_usart1_init();
@@ -113,9 +122,11 @@ int main(void)
 
   /* add user code begin 2 */
 	
+//	hi2cx.i2cx = I2C1;
+//  i2c_config(&hi2cx);
+	
 	delay_init();
-	USB_debug_init();
-  AMCU_init();
+	MH_MCU_init();
 
   /* add user code end 2 */
 
@@ -123,8 +134,6 @@ int main(void)
   {
     /* add user code begin 3 */
 		
-		USB_debug_run();
-		//AMCU_run();
 		main_run();
 
     /* add user code end 3 */

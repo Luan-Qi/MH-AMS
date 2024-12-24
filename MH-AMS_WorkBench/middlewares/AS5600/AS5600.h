@@ -105,8 +105,10 @@ class AS5600
 {
 public:
   //AS5600(TwoWire *wire = &Wire);
+	AS5600(gpio_type * SCL_GPIO, uint16_t SCL_PIN, gpio_type * SDA_GPIO, uint16_t SDA_PIN) : \
+	I2C(SCL_GPIO, SCL_PIN, SDA_GPIO, SDA_PIN){}
 
-  bool     begin(uint8_t directionPin = AS5600_SW_DIRECTION_PIN);
+  bool     begin();
   bool     isConnected();
 
   //  address = fixed   0x36 for AS5600, 
@@ -242,6 +244,8 @@ public:
 
 
 protected:
+	IIC I2C;
+	
 	uint8_t AS5600_Read8(uint8_t dev_addr, uint8_t reg_addr, uint8_t i2c_len, uint8_t *i2c_data_buf);
 	uint8_t AS5600_Write8(uint8_t dev_addr, uint8_t reg_addr, uint8_t i2c_len, uint8_t *i2c_data_buf);
   uint8_t  readReg(uint8_t reg);

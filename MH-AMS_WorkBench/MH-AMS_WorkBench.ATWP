@@ -12,7 +12,7 @@
     </DEBUG>
     <SYSTEM>
         <Mode>
-            <ModeSub name="Time_Base" value="SysTick"/>
+            <ModeSub name="Time_Base" value=""/>
         </Mode>
     </SYSTEM>
     <TMR1>
@@ -71,10 +71,16 @@
             <ParametersSub name="RealBaudRate" value="115163"/>
         </Parameters>
     </USART2>
+    <DMA>
+        <MEMTOMEM0>
+            <ParametersSub name="Instance" value="DMA1_Channel1"/>
+        </MEMTOMEM0>
+    </DMA>
     <NVIC>
         <SysTick_Handler>1;15;0</SysTick_Handler>
         <FLASH_IRQHandler>0;0;0</FLASH_IRQHandler>
         <CRM_IRQHandler>0;0;0</CRM_IRQHandler>
+        <DMA1_Channel1_IRQHandler>0;0;0</DMA1_Channel1_IRQHandler>
         <TMR1_BRK_OVF_TRG_HALL_IRQHandler>1;0;0</TMR1_BRK_OVF_TRG_HALL_IRQHandler>
         <TMR1_CH_IRQHandler>1;0;0</TMR1_CH_IRQHandler>
         <TMR3_GLOBAL_IRQHandler>1;0;0</TMR3_GLOBAL_IRQHandler>
@@ -83,7 +89,20 @@
         <USART2_IRQHandler>1;1;0</USART2_IRQHandler>
     </NVIC>
     <GPIO>
+        <Signal SignalName="GPIO_Output" PinName="PF0/HEXT_IN">
+            <Parameters name="GPIO_Outputlevel" value="GPIO_OUTPUTLEVEL_HIGH"/>
+            <Parameters name="GPIO_Type" value="GPIO_OUTPUT_OPEN_DRAIN"/>
+        </Signal>
         <Signal SignalName="GPIO_Output" PinName="PF1/HEXT_OUT">
+            <Parameters name="GPIO_Outputlevel" value="GPIO_OUTPUTLEVEL_HIGH"/>
+            <Parameters name="GPIO_Type" value="GPIO_OUTPUT_OPEN_DRAIN"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PA15">
+            <Parameters name="GPIO_Outputlevel" value="GPIO_OUTPUTLEVEL_HIGH"/>
+            <Parameters name="GPIO_Type" value="GPIO_OUTPUT_OPEN_DRAIN"/>
+        </Signal>
+        <Signal SignalName="GPIO_Output" PinName="PB3">
+            <Parameters name="GPIO_Outputlevel" value="GPIO_OUTPUTLEVEL_HIGH"/>
             <Parameters name="GPIO_Type" value="GPIO_OUTPUT_OPEN_DRAIN"/>
         </Signal>
     </GPIO>
