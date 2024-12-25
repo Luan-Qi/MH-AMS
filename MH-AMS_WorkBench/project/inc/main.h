@@ -14,7 +14,15 @@
 
 #define channel_max 4
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 extern uint32_t millis();
+	 
+#ifdef __cplusplus
+}
+#endif
 //extern i2c_handle_type hi2cx;
 
 #endif

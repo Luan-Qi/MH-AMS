@@ -3,6 +3,10 @@
 
 #include "main.h"
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 #define IIC1_SCL_GPIO			GPIOA
 #define IIC1_SCL_PIN			GPIO_PINS_15
 #define IIC1_SDA_GPIO			GPIOB
@@ -42,19 +46,12 @@ protected:
 	uint8_t sda_index = 3;
 };
 
+
+#ifdef __cplusplus
+}
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
+#endif
 
 
 

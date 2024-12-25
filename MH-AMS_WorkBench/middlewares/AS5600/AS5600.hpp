@@ -11,7 +11,7 @@
 
 #include "main.h"
 #include "math.h"
-#include "MyiiC.h"
+#include "MyiiC.hpp"
 
 #define AS5600_LIB_VERSION              (F("0.6.1"))
 
@@ -98,7 +98,6 @@ const uint8_t AS5600_FAST_FILT_LSB10    = 7;
 //  setWatchDog
 const uint8_t AS5600_WATCHDOG_OFF       = 0;
 const uint8_t AS5600_WATCHDOG_ON        = 1;
-
 
 
 class AS5600
@@ -277,5 +276,6 @@ protected:
 
 
 //  -- END OF FILE --
+
 
 #endif

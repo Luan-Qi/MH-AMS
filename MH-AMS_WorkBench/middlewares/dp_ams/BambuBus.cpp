@@ -1,4 +1,4 @@
-#include "BambuBus.h"
+#include "BambuBus.hpp"
 #include <string.h>
 #include <stdio.h>
 #include "CRC16.h"

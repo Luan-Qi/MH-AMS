@@ -32,8 +32,9 @@
 
 #include "delay.h"
 #include "math.h"
-#include "MH_MCU.h"
+#include "MH_MCU.hpp"
 #include "button.h"
+#include "shell_cpp.h"
 
 /* add user code end private includes */
 
@@ -57,6 +58,8 @@
 
 extern double distance_count;
 extern void AMCU_bus_run();
+
+Shell shell;
 
 //i2c_handle_type hi2cx;
 

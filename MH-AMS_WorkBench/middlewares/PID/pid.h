@@ -12,6 +12,10 @@
 #ifndef pid_h
 #define pid_h
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /*
 PID结构体初始化说明,以位置式PID为例:
 PosiPidNode PosiPid=
@@ -69,6 +73,10 @@ float CalcPosiPdOut(PosiPidNode *pid, float expc, float curr);//计算位置式P
 //增量式PID
 void SetInrcPidParm(InrcPidNode *pid, float kp, float ki, float kd);//设置PID参数
 float CalcInrcPidOut(InrcPidNode *pid, float expc, float curr);//计算目标增量
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

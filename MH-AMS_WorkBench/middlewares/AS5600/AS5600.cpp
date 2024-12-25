@@ -6,8 +6,8 @@
 //    DATE: 2022-05-28
 //     URL: https://github.com/RobTillaart/AS5600
 
-#include "AS5600.h"
-#include "MyiiC.h"
+#include "AS5600.hpp"
+#include "MyiiC.hpp"
 
 //  CONFIGURATION REGISTERS
 const uint8_t AS5600_ZMCO = 0x00;

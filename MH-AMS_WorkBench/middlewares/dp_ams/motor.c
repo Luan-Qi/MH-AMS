@@ -1,6 +1,6 @@
 #include "motor.h"
 #include "pid.h"
-#include "MH_MCU.h"
+#include "MH_MCU.hpp"
 
 PosiPidNode motor_channel_pid;
 uint8_t motor_channel_busy = 0;
