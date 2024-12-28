@@ -57,9 +57,9 @@ extern "C" {
 
 /* add user code begin dma define */
 /* user can only modify the dma define value */
-#define DMA1_CHANNEL1_BUFFER_SIZE   0
-#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
-#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
+//#define DMA1_CHANNEL1_BUFFER_SIZE   0
+//#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
+//#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
 
 //#define DMA1_CHANNEL2_BUFFER_SIZE   0
 //#define DMA1_CHANNEL2_MEMORY_BASE_ADDR   0
@@ -69,8 +69,8 @@ extern "C" {
 //#define DMA1_CHANNEL3_MEMORY_BASE_ADDR   0
 //#define DMA1_CHANNEL3_PERIPHERAL_BASE_ADDR   0
 
-//#define DMA1_CHANNEL4_BUFFER_SIZE   0
-//#define DMA1_CHANNEL4_MEMORY_BASE_ADDR   0
+#define DMA1_CHANNEL4_BUFFER_SIZE   0
+#define DMA1_CHANNEL4_MEMORY_BASE_ADDR   0
 //#define DMA1_CHANNEL4_PERIPHERAL_BASE_ADDR   0
 
 //#define DMA1_CHANNEL5_BUFFER_SIZE   0
@@ -106,8 +106,8 @@ extern "C" {
   /* init usart2 function. */
   void wk_usart2_init(void);
 
-  /* init dma1 channel1 */
-  void wk_dma1_channel1_init(void);
+  /* init dma1 channel4 */
+  void wk_dma1_channel4_init(void);
 
   /* config dma channel transfer parameter */
   /* user need to modify parameters memory_base_addr and buffer_size */

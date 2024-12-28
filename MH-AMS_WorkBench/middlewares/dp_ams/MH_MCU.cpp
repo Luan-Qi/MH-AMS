@@ -264,98 +264,13 @@ void AMCU_bus_run()
     AMCU_bus_have_data = 0;
 }
 
-//#include "mbed.h"
-// 创建一个Ticker对象
-//mbed::Ticker AMCU_bus_ticker;
-void debug_send_run()
-{
-    return;
-    /*char info[500];
-    DEBUG_time();
-
-    for (int i = 0; i < max_filament_num; i++)
-    {
-        int num = sprintf(info, "\nfilament %d %.1fmm", i + 1, get_filament_meters(i));
-        DEBUG_num(info, num);
-        switch (get_filament_motion(i))
-        {
-        case need_pull_back:
-            DEBUG(" -back");
-            break;
-        case need_send_out:
-            DEBUG(" -send");
-            break;
-        case waiting:
-            DEBUG(" -wating");
-        }
-    }*/
-}
-
-// 定义中断服务函数
-void AMCU_timer_handler()
-{
-//    static int count = 0;
-//    switch (count)
-//    {
-//    case 0:
-//        AMCU_bus_send_read_stu(-1);
-//        break;
-//    case 8:
-//        AMCU_bus_send_set_motion();
-
-//        break;
-//    }
-//    count++;
-//    if (count >= 10)
-//    {
-//        count = 0;
-//    }
-}
-// 数据接收回调
-void AMCU_on_uart_rx()
-{
-    //while (uart_is_readable(AMCU_uart))
-    //{
-    //    unsigned char x = uart_getc(AMCU_uart);
-    //    AMCU_bus_recv_IRQ(x);
-    //}
-}
-void AMCU_UART_Init(uint32_t baudrate)
-{
-    // 初始化UART
-    //uart_init(AMCU_uart, baudrate);
-
-    // 将引脚设置为UART功能
-    //gpio_set_function(AMCU_pin_tx, GPIO_FUNC_UART);
-    //gpio_set_function(AMCU_pin_rx, GPIO_FUNC_UART);
-
-    // 关闭硬件流
-    //uart_set_hw_flow(AMCU_uart, false, false);
-
-    // 设置奇偶位
-    //uart_set_format(AMCU_uart, 8, 1, UART_PARITY_EVEN);
-
-    // FIFO
-    //uart_set_fifo_enabled(AMCU_uart, true);
-
-    // 注册中断处理函数
-    //irq_set_exclusive_handler(AMCU_uart_IRQ, AMCU_on_uart_rx);
-    //irq_set_enabled(AMCU_uart_IRQ, true);
-
-    // 开启接收中断
-    //uart_set_irq_enables(AMCU_uart, true, false);
-}
-void AMCU_bus_init()
-{
-    //AMCU_UART_Init(115200);
-    //AMCU_bus_ticker.attach(&AMCU_timer_handler, std::chrono::milliseconds(100)); // 0.01s=10ms
-}
 
 void MH_MCU_init()
 {
 	AS5600_init();
 	motor_pid_init(as5600.readAngle());
-	//BambuBus_init();
+	gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
+	BambuBus_init();
 	printf("inittttttttttttttttt\r\n");
 }
 
@@ -382,6 +297,10 @@ void main_run()
 		if(if_system_init==true) beep_request(4, 50, 50);
 		else beep_request(1, 50, 50);
 	}
+
+	int stu = BambuBus_run();
+	if(stu>=-1) printf("%d\r\n", stu);
+
 	beep_run();
 	button_main_run();
 	AS5600_run();
@@ -422,7 +341,9 @@ void AMCU_run()
         //RGB_2812.SetPixelColor(0, RgbColor(0, 127, 20));
         if_count_meters = false;
         break;
-    case waiting:
+		case on_use:
+				break;
+    case idle:
         //RGB_2812.SetPixelColor(0, RgbColor(5, 5, 0));
         break;
     }
@@ -431,7 +352,7 @@ void AMCU_run()
 
     if (if_count_meters)
         add_filament_meters(now_filament_num, distance_E);
-    debug_send_run();
+    //debug_send_run();
     
     AMCU_bus_run();
     int stu=BambuBus_run();

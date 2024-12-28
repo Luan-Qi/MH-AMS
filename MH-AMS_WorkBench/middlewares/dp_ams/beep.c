@@ -5,7 +5,7 @@ uint8_t beep_queen[10] = {0};
 
 void beep_set(uint8_t set)
 {
-	if(set!=0) tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 2);
+	if(set!=0) tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 3);
 	else tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 0);
 }
 

@@ -194,6 +194,7 @@ void wk_nvic_config(void)
   NVIC_SetPriority(DebugMonitor_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
+  nvic_irq_enable(DMA1_Channel5_4_IRQn, 0, 0);
   nvic_irq_enable(TMR1_BRK_OVF_TRG_HALL_IRQn, 0, 0);
   nvic_irq_enable(TMR1_CH_IRQn, 0, 0);
   nvic_irq_enable(TMR3_GLOBAL_IRQn, 0, 0);
@@ -234,6 +235,7 @@ void wk_gpio_config(void)
 
   /* gpio output config */
   gpio_bits_set(GPIOF, GPIO_PINS_0 | GPIO_PINS_1);
+  gpio_bits_reset(GPIOA, GPIO_PINS_12);
   gpio_bits_set(GPIOA, GPIO_PINS_15);
   gpio_bits_set(GPIOB, GPIO_PINS_3);
   gpio_bits_reset(GPIOB, GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7);
@@ -244,6 +246,13 @@ void wk_gpio_config(void)
   gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_1;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOF, &gpio_init_struct);
+
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_12;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOA, &gpio_init_struct);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
@@ -570,22 +579,15 @@ void wk_usart1_init(void)
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
-  /* configure the RTS pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_1);
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_12;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
   /* configure param */
-  usart_init(USART1, 1228800, USART_DATA_8BITS, USART_STOP_1_BIT);
+  usart_init(USART1, 1250000, USART_DATA_9BITS, USART_STOP_1_BIT);
   usart_transmitter_enable(USART1, TRUE);
   usart_receiver_enable(USART1, TRUE);
   usart_parity_selection_config(USART1, USART_PARITY_EVEN);
 
-  usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_RTS);
+  usart_dma_transmitter_enable(USART1, TRUE);
+
+  usart_hardware_flow_control_set(USART1, USART_HARDWARE_FLOW_NONE);
 
   /**
    * Users need to configure USART1 interrupt functions according to the actual application.
@@ -604,7 +606,6 @@ void wk_usart1_init(void)
   /* add user code begin usart1_init 3 */
 	
 	usart_interrupt_enable(USART1, USART_RDBF_INT, TRUE);
-	gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
 
   /* add user code end usart1_init 3 */
 }
@@ -673,32 +674,41 @@ void wk_usart2_init(void)
 }
 
 /**
-  * @brief  init dma1 channel1 for "memtomem"
+  * @brief  init dma1 channel4 for "usart1_tx"
   * @param  none
   * @retval none
   */
-void wk_dma1_channel1_init(void)
+void wk_dma1_channel4_init(void)
 {
-  /* add user code begin dma1_channel1 0 */
+  /* add user code begin dma1_channel4 0 */
 
-  /* add user code end dma1_channel1 0 */
+  /* add user code end dma1_channel4 0 */
 
   dma_init_type dma_init_struct;
 
-  dma_reset(DMA1_CHANNEL1);
+  dma_reset(DMA1_CHANNEL4);
   dma_default_para_init(&dma_init_struct);
-  dma_init_struct.direction = DMA_DIR_MEMORY_TO_MEMORY;
+  dma_init_struct.direction = DMA_DIR_MEMORY_TO_PERIPHERAL;
   dma_init_struct.memory_data_width = DMA_MEMORY_DATA_WIDTH_BYTE;
   dma_init_struct.memory_inc_enable = TRUE;
   dma_init_struct.peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_BYTE;
-  dma_init_struct.peripheral_inc_enable = TRUE;
-  dma_init_struct.priority = DMA_PRIORITY_LOW;
+  dma_init_struct.peripheral_inc_enable = FALSE;
+  dma_init_struct.priority = DMA_PRIORITY_VERY_HIGH;
   dma_init_struct.loop_mode_enable = FALSE;
-  dma_init(DMA1_CHANNEL1, &dma_init_struct);
+  dma_init(DMA1_CHANNEL4, &dma_init_struct);
 
-  /* add user code begin dma1_channel1 1 */
+  /**
+   * Users need to configure DMA1 interrupt functions according to the actual application.
+   * 1. Call the below function to enable the corresponding DMA1 interrupt.
+   *     --dma_interrupt_enable(...)
+   * 2. Add the user's interrupt handler code into the below function in the at32f421_int.c file.
+   *     --void DMA1_Channel5_4_IRQHandler(void)
+   */ 
+  /* add user code begin dma1_channel4 1 */
+	
+	dma_interrupt_enable(DMA1_CHANNEL4, DMA_FDT_INT, TRUE);
 
-  /* add user code end dma1_channel1 1 */
+  /* add user code end dma1_channel4 1 */
 }
 
 /**

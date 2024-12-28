@@ -30,6 +30,9 @@
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 
+#include "BambuBus.hpp"
+#include "USB_debug.h"
+
 /* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
@@ -229,6 +232,29 @@ void SysTick_Handler(void)
 }
 
 /**
+  * @brief  this function handles DMA1 Channel 5 & 4 handler.
+  * @param  none
+  * @retval none
+  */
+void DMA1_Channel5_4_IRQHandler(void)
+{
+  /* add user code begin DMA1_Channel5_4_IRQ 0 */
+
+  /* add user code end DMA1_Channel5_4_IRQ 0 */
+  /* add user code begin DMA1_Channel5_4_IRQ 1 */
+	
+	if(dma_interrupt_flag_get(DMA1_FDT4_FLAG))
+  {
+    dma_flag_clear(DMA1_FDT4_FLAG);
+    dma_channel_enable(DMA1_CHANNEL4, FALSE);
+		//gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
+		usart_interrupt_enable(USART1, USART_TDC_INT, TRUE);
+  }
+
+  /* add user code end DMA1_Channel5_4_IRQ 1 */
+}
+
+/**
   * @brief  this function handles TMR1 brake overflow trigger and hall handler.
   * @param  none
   * @retval none
@@ -312,14 +338,15 @@ void USART1_IRQHandler(void)
   /* add user code end USART1_IRQ 0 */
   /* add user code begin USART1_IRQ 1 */
 	
-	uint16_t tmp;
-
+	if(usart_interrupt_flag_get(USART1, USART_TDC_FLAG) != RESET)
+  {
+		gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
+		usart_flag_clear(USART1, USART_TDC_FLAG);
+  }
   if(usart_interrupt_flag_get(USART1, USART_RDBF_FLAG) != RESET)
   {
-    tmp = usart_data_receive(USART1);
-		while(usart_flag_get(USART2, USART_TDBE_FLAG) == RESET){};
-    usart_data_transmit(USART2, tmp);
-		while(usart_flag_get(USART2, USART_TDC_FLAG) == RESET){};
+		RX_IRQ(usart_data_receive(USART1));
+		//debug_Bambus_echo(usart_data_receive(USART1));
   }
 
   /* add user code end USART1_IRQ 1 */

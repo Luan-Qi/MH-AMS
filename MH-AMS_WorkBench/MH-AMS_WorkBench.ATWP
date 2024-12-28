@@ -55,11 +55,11 @@
     <USART1>
         <Mode>
             <ModeSub name="Mode" value="Asynchronous"/>
-            <ModeSub name="Hardware Flow Control" value="RTS_Only"/>
         </Mode>
         <Parameters>
-            <ParametersSub name="BaudRate" value="1228800"/>
-            <ParametersSub name="RealBaudRate" value="1224490"/>
+            <ParametersSub name="BaudRate" value="1250000"/>
+            <ParametersSub name="RealBaudRate" value="1250000"/>
+            <ParametersSub name="Databitnum" value="USART_DATA_9BITS"/>
             <ParametersSub name="Parityselection" value="USART_PARITY_EVEN"/>
         </Parameters>
     </USART1>
@@ -68,19 +68,21 @@
             <ModeSub name="Mode" value="Asynchronous"/>
         </Mode>
         <Parameters>
-            <ParametersSub name="RealBaudRate" value="115163"/>
+            <ParametersSub name="BaudRate" value="1228800"/>
+            <ParametersSub name="RealBaudRate" value="1224490"/>
         </Parameters>
     </USART2>
     <DMA>
-        <MEMTOMEM0>
-            <ParametersSub name="Instance" value="DMA1_Channel1"/>
-        </MEMTOMEM0>
+        <USART1_TX>
+            <ParametersSub name="Instance" value="DMA1_Channel4"/>
+            <ParametersSub name="Priority" value="DMA_PRIORITY_VERY_HIGH"/>
+        </USART1_TX>
     </DMA>
     <NVIC>
         <SysTick_Handler>1;15;0</SysTick_Handler>
         <FLASH_IRQHandler>0;0;0</FLASH_IRQHandler>
         <CRM_IRQHandler>0;0;0</CRM_IRQHandler>
-        <DMA1_Channel1_IRQHandler>0;0;0</DMA1_Channel1_IRQHandler>
+        <DMA1_Channel5_4_IRQHandler>1;0;0</DMA1_Channel5_4_IRQHandler>
         <TMR1_BRK_OVF_TRG_HALL_IRQHandler>1;0;0</TMR1_BRK_OVF_TRG_HALL_IRQHandler>
         <TMR1_CH_IRQHandler>1;0;0</TMR1_CH_IRQHandler>
         <TMR3_GLOBAL_IRQHandler>1;0;0</TMR3_GLOBAL_IRQHandler>
@@ -148,7 +150,7 @@
         <PinSub pinname="PA9" signalname="USART1_TX" signaltype="2"/>
         <PinSub pinname="PA10" signalname="USART1_RX" signaltype="2"/>
         <PinSub pinname="PA11" signalname="GPIO_Input" signaltype="3"/>
-        <PinSub pinname="PA12" signalname="USART1_RTS" signaltype="3"/>
+        <PinSub pinname="PA12" signalname="GPIO_Output" signaltype="3"/>
         <PinSub pinname="PA13" signalname="DEBUG_SWDIO" signaltype="2"/>
         <PinSub pinname="PA14" signalname="DEBUG_SWCLK" signaltype="2"/>
         <PinSub pinname="PA15" signalname="GPIO_Output" signaltype="3"/>

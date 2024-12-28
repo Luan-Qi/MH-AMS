@@ -56,10 +56,7 @@
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
 
-extern double distance_count;
-extern void AMCU_bus_run();
-
-Shell shell;
+//Shell shell;
 
 //i2c_handle_type hi2cx;
 
@@ -95,15 +92,18 @@ int main(void)
   /* nvic config. */
   wk_nvic_config();
 
-  /* init dma1 channel1 */
-  wk_dma1_channel1_init();
+  /* init dma1 channel4 */
+  wk_dma1_channel4_init();
   /* config dma channel transfer parameter */
   /* user need to modify define values DMAx_CHANNELy_XXX_BASE_ADDR and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
-  wk_dma_channel_config(DMA1_CHANNEL1, 
-                        DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR, 
-                        DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
-                        DMA1_CHANNEL1_BUFFER_SIZE);
-  dma_channel_enable(DMA1_CHANNEL1, TRUE);
+  wk_dma_channel_config(DMA1_CHANNEL4, 
+                        (uint32_t)&USART1->dt, 
+                        DMA1_CHANNEL4_MEMORY_BASE_ADDR, 
+                        DMA1_CHANNEL4_BUFFER_SIZE);
+  /* usart1 tx dma remap */
+  scfg_usart1_tx_dma_channel_remap(SCFG_USART1_TX_TO_DMA_CHANNEL_4);
+
+  //dma_channel_enable(DMA1_CHANNEL4, TRUE);
 
   /* init usart1 function. */
   wk_usart1_init();
