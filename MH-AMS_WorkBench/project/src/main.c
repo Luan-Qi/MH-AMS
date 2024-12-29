@@ -34,7 +34,7 @@
 #include "math.h"
 #include "MH_MCU.hpp"
 #include "button.h"
-#include "shell_cpp.h"
+#include "shell.h"
 
 /* add user code end private includes */
 
@@ -56,7 +56,7 @@
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
 
-//Shell shell;
+Shell shell;
 
 //i2c_handle_type hi2cx;
 

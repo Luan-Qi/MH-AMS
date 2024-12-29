@@ -65,6 +65,7 @@ void button_main_run()
 			channel_choose++;
 			if(channel_choose>channel_max-1) channel_choose = 0;
 			motor_channel_requent(channel_choose);
+			//motor_motions_requent(888, 10);
 		}
 	}
 	else

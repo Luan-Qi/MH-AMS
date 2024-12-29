@@ -19,27 +19,27 @@ void AS5600_init()
 	if(as5600.begin()&&as5600_2.begin()) if_system_init = true;
 }
 
-#define AS5600_PI 3.1415926535897932384626433832795
+//#define AS5600_PI 3.1415926535897932384626433832795
 
-float AS5600_get_distance_E()
-{
-	static int32_t last_distance = 0;
-	int32_t cir_E = 0;
-	int32_t now_distance = as5600.rawAngle();
-	float distance_E;
-	if ((now_distance > 3072) && (last_distance <= 1024))
-	{
-		cir_E = -4096;
-	}
-	else if ((now_distance <= 1024) && (last_distance > 3072))
-	{
-		cir_E = 4096;
-	}
+//float AS5600_get_distance_E()
+//{
+//	static int32_t last_distance = 0;
+//	int32_t cir_E = 0;
+//	int32_t now_distance = as5600.rawAngle();
+//	float distance_E;
+//	if ((now_distance > 3072) && (last_distance <= 1024))
+//	{
+//		cir_E = -4096;
+//	}
+//	else if ((now_distance <= 1024) && (last_distance > 3072))
+//	{
+//		cir_E = 4096;
+//	}
 
-	distance_E = (float)(now_distance - last_distance + cir_E) * AS5600_PI * 19.3 / 4096; // D=19.3mm
-	last_distance = now_distance;
-	return distance_E;
-}
+//	distance_E = (float)(now_distance - last_distance + cir_E) * AS5600_PI * 12 / 4096; // D=12mm
+//	last_distance = now_distance;
+//	return distance_E;
+//}
 
 #include "CRC.h"
 
@@ -48,58 +48,6 @@ CRC16 AMCU_bus_CRC16(0x1021, 0x913D, 0x0000, false, false);
 uint8_t _AMCU_bus_data_buf[100];
 CRC8 _AMCU_RX_IRQ_crcx(0x39, 0x66, 0x00, false, false);
 uint8_t AMCU_bus_bufx[100];
-
-int AMCU_bus_have_data = 0;
-
-void AMCU_bus_recv_IRQ(unsigned char data)
-{
-    static int _index = 0;
-    static int length = 100;
-
-    if (_index == 0)
-    {
-        if (data == 0x3D)
-        {
-            _AMCU_bus_data_buf[0] = 0x3D;
-            _AMCU_RX_IRQ_crcx.restart();
-            _AMCU_RX_IRQ_crcx.add(0x3D);
-            _index = 1;
-            length = 100;
-        }
-        return;
-    }
-    else
-    {
-        _AMCU_bus_data_buf[_index] = data;
-        if (_index == 3)
-        {
-            length = data;
-        }
-        if (_index < 4)
-        {
-            _AMCU_RX_IRQ_crcx.add(data);
-        }
-        else if (_index == 4)
-        {
-            if (data != _AMCU_RX_IRQ_crcx.calc())
-            {
-                _index = 0;
-                return;
-            }
-        }
-        ++_index;
-        if (_index >= length)
-        {
-            _index = 0;
-            memcpy(AMCU_bus_bufx, _AMCU_bus_data_buf, length);
-            AMCU_bus_have_data = length;
-        }
-        if (_index >= 100)
-        {
-            _index = 0;
-        }
-    }
-}
 
 bool AMCU_check_crc16(uint8_t *data, int data_length)
 {
@@ -115,10 +63,6 @@ bool AMCU_check_crc16(uint8_t *data, int data_length)
     return false;
 }
 
-void AMCU_bus_send(uint8_t *data, int data_length)
-{
-    //uart_write_blocking(AMCU_uart, data, data_length);
-}
 
 void AMCU_bus_send_packge_with_CRC(uint8_t *data, int data_length)
 {
@@ -141,7 +85,7 @@ void AMCU_bus_send_packge_with_CRC(uint8_t *data, int data_length)
     data[(data_length + 1)] = num >> 8;
     data_length += 2;
 
-    AMCU_bus_send(data, data_length);
+    //AMCU_bus_send(data, data_length);
 }
 
 uint8_t AMCU_bus_send_read_stu_str[] = {0x3D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00};
@@ -231,38 +175,6 @@ void AMCU_bus_send_set_motion()
 //    AMCU_bus_send_packge_with_CRC(AMCU_bus_send_read_motion_str, sizeof(AMCU_bus_send_read_motion_str));
 }
 
-void AMCU_bus_deal_set_motion_res(uint8_t *data, int data_length)
-{
-    // char ADR = data[1];
-    uint8_t res = data[6];
-    switch (res)
-    {
-    case 0x00:
-        break;
-    }
-}
-
-void AMCU_bus_run()
-{
-    if (AMCU_bus_have_data == 0)
-        return;
-    if (AMCU_check_crc16(AMCU_bus_bufx, AMCU_bus_have_data) == false)
-        return;
-    char ADR = AMCU_bus_bufx[1];
-    if (ADR >= max_filament_num)
-        return;
-    switch (AMCU_bus_bufx[5])
-    {
-    case 0x80:
-        AMCU_bus_deal_read_stu_res(AMCU_bus_bufx, AMCU_bus_have_data);
-        break;
-    case 0x81:
-        AMCU_bus_deal_set_motion_res(AMCU_bus_bufx, AMCU_bus_have_data);
-        break;
-    }
-
-    AMCU_bus_have_data = 0;
-}
 
 
 void MH_MCU_init()
@@ -287,6 +199,34 @@ void AS5600_run()
 	}
 }
 
+uint32_t motions_time = 0;
+
+void motor_motion_run()
+{
+	if(millis_overstep(motions_time)) motions_time = millis() + 25;
+	else return;
+
+	int num = get_now_filament_num();
+
+	switch (get_filament_motion(num))
+	{
+		case need_send_out:
+			printf("S");
+			motor_motions_requent(666, 10, num);
+			break;
+		case need_pull_back:
+			printf("P");
+			motor_motions_requent(-666, 10, num);
+			break;
+		case on_use:
+			printf("U");
+			break;
+		case idle:
+			printf("I");
+			break;
+	}
+}
+
 uint32_t request_time = 0;
 
 void main_run()
@@ -299,19 +239,22 @@ void main_run()
 	}
 
 	int stu = BambuBus_run();
-	if(stu>=-1) printf("%d\r\n", stu);
+	//if(stu>=-1&&stu!=10) printf("%d ", stu);
 
 	beep_run();
 	button_main_run();
-	AS5600_run();
-	motor_run();
+	//AS5600_run();
+	motor_motion_run();
+	motor_channel_run();
+    motor_motions_run();
 }
 
 
 void AMCU_run()
 {
     bool if_count_meters = true;
-    float distance_E = AS5600_get_distance_E();
+		float distance_E = 0;
+    //float distance_E = AS5600_get_distance_E();
     static int now_filament_num = 255;
     int x = get_now_filament_num();
     if (now_filament_num != x)
@@ -354,7 +297,7 @@ void AMCU_run()
         add_filament_meters(now_filament_num, distance_E);
     //debug_send_run();
     
-    AMCU_bus_run();
+    //AMCU_bus_run();
     int stu=BambuBus_run();
     if(stu==-1)
     {

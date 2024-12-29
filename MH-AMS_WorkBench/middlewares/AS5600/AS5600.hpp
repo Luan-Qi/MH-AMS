@@ -240,7 +240,8 @@ public:
 
   //  EXPERIMENTAL 0.5.2
   int      lastError();
-
+	
+	uint16_t init_angle = 0;
 
 protected:
 	IIC I2C;

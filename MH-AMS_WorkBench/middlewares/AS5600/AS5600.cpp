@@ -52,8 +52,12 @@ bool AS5600::begin()
 {
 	I2C.IIC_Init();
   setDirection(AS5600_CLOCK_WISE);
-  if (! isConnected()) return false;
-  return true;
+  if (! isConnected()){return false;}
+  else
+	{
+		init_angle = readAngle();
+		return true;
+	}
 }
 
 

@@ -561,7 +561,29 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>shel</GroupName>
+          <GroupName>shell</GroupName>
+          <Files>
+            <File>
+              <FileName>shell.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\letter_shell\src\shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>shell_cmd_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\letter_shell\src\shell_cmd_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>shell_companion.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\letter_shell\src\shell_companion.c</FilePath>
+            </File>
+            <File>
+              <FileName>shell_ext.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\middlewares\letter_shell\src\shell_ext.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

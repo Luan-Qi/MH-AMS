@@ -31,6 +31,15 @@ struct _filament
     uint16_t pressure = 0;
 };
 
+void debug_buf(uint8_t *buf, int len)
+{
+	for(int i = 0; i < len; i++)
+	{
+		printf("%02X ", buf[i]);
+	}
+	printf("\r\n");
+}
+
 #include "flash.h" // 包含用于Flash操作的函数
 #define use_flash_addr (256 * 1024)
 
@@ -313,38 +322,6 @@ void package_send_with_crc(uint8_t *data, int data_length)
     data_length += 2;
     send_uart(data, data_length);
 }
-void package_send_with_crc_debug(uint8_t *data, int data_length)
-{
-
-    crc_8.restart();
-    if (data[1] & 0x80)
-    {
-        for (auto i = 0; i < 3; i++)
-        {
-            crc_8.add(data[i]);
-        }
-        data[3] = crc_8.calc();
-    }
-    else
-    {
-        for (auto i = 0; i < 6; i++)
-        {
-            crc_8.add(data[i]);
-        }
-        data[6] = crc_8.calc();
-    }
-    crc_16.restart();
-    data_length -= 2;
-    for (auto i = 0; i < data_length; i++)
-    {
-        crc_16.add(data[i]);
-    }
-    uint16_t num = crc_16.calc();
-    data[(data_length)] = num & 0xFF;
-    data[(data_length + 1)] = num >> 8;
-    data_length += 2;
-    send_uart(data, data_length);
-}
 
 uint8_t packge_send_buf[1000];
 
@@ -469,6 +446,7 @@ void set_motion_res_datas(unsigned char *set_buf, unsigned char AMS_num, unsigne
             meters = data_save.filament[AMS_num][read_num].meters;
         }
     }
+    printf("%f\r\n", meters);
     set_buf[0] = AMS_num;
     set_buf[2] = flagx;
     set_buf[3] = read_num; // maybe using number
@@ -594,6 +572,18 @@ bool set_motion(unsigned char AMS_num, unsigned char read_num, unsigned char sta
                 0x04, \
                 0xC3, 0xF2, 0xBF, 0xBC, \
                 0x01, 0x01, 0x01, 0x01,*/
+// unsigned char Cxx_res[] = {0x3D, 0xE0, 0x2C, 0x1A, 0x03,
+//                            0x00, 0x00, 0x00, 0xFF, // 0x0C...
+//                            0x00, 0x00, 0x80, 0xBF,
+//                            0x00, 0x00, 0x00, 0xC0,
+//                            0x00, 0xC0, 0x5D, 0xFF,
+//                            0x00, 0x00, 0x00, 0x00, // 0xFE, 0xFF, 0xFE, 0xFF,
+//                            0x00, 0x44, 0x00, 0x00,
+//                            0x10,
+//                            0xC1, 0xC3, 0xEC, 0xBC,
+//                            0x01, 0x01, 0x01, 0x01,
+//                            0x00, 0x00, 0x00, 0x00,
+//                            0x90, 0xE4};
 unsigned char Cxx_res[] = {0x3D, 0xE0, 0x2C, 0x1A, 0x03,
                            C_test 0x00, 0x00, 0x00, 0x00,
                            0x90, 0xE4};
@@ -608,7 +598,8 @@ void send_for_Cxx(unsigned char *buf, int length)
     /*if (!set_motion(AMS_num, read_num, statu_flags, fliment_motion_flag))
         return;*/
 
-    //set_motion_res_datas(Cxx_res + 5, AMS_num, read_num);
+    set_motion_res_datas(Cxx_res + 5, AMS_num, read_num);
+    //debug_buf(Cxx_res, sizeof(Cxx_res));
     package_send_with_crc(Cxx_res, sizeof(Cxx_res));
     if (package_num < 7)
         package_num++;
@@ -679,8 +670,9 @@ void send_for_Dxx(unsigned char *buf, int length)
             filament_flag_NFC |= 1 << i;
         }
     }
-    if (!set_motion(AMS_num, read_num, statu_flags, fliment_motion_flag))
-        return;
+
+    if (!set_motion(AMS_num, read_num, statu_flags, fliment_motion_flag)) return;
+    
     /*if (need_res_for_06)
     {
         Dxx_res2[1] = 0xC0 | (package_num << 3);
@@ -695,7 +687,6 @@ void send_for_Dxx(unsigned char *buf, int length)
         need_res_for_06 = false;
     }
     else*/
-
     {
         Dxx_res[1] = 0xC0 | (package_num << 3);
         Dxx_res[5] = AMS_num;
@@ -990,15 +981,15 @@ int BambuBus_run()
     int16_t stu=-100;//online_wait
     static uint32_t time_set = 200;
     uint32_t timex = millis();
-    if(timex > time_set)
-    {
-        stu=-100;//offline
-    }
+    // if(timex > time_set)
+    // {
+    //     stu=-100;//offline
+    // }
     if (BambuBus_have_data)
     {
         int data_length = BambuBus_have_data;
         BambuBus_have_data = 0;
-        time_set = timex + 200;
+        //time_set = timex + 200;
         stu = get_packge_type(buf_X, data_length);
         switch (stu)
         {
