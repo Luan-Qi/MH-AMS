@@ -2,11 +2,12 @@
 
 uint8_t beep_busy = 0;
 uint8_t beep_queen[10] = {0};
+uint8_t beep_state = 0;
 
 void beep_set(uint8_t set)
 {
-	if(set!=0) tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 3);
-	else tmr_channel_value_set(TMR16, TMR_SELECT_CHANNEL_1, 0);
+	if(set!=0) beep_state = 1;
+	else beep_state = 0;
 }
 
 bool beep_request(uint8_t times, uint8_t delay_on, uint8_t delay_down)
@@ -45,5 +46,8 @@ void beep_run()
 		beep_time = millis() + beep_queen[beep_busy-2];
 		beep_queen[9]--;
 	}
+	
+	if(beep_state == 1&&TMR6->cval<15) gpio_bits_write(GPIOB, GPIO_PINS_12, TRUE);
+	else gpio_bits_write(GPIOB, GPIO_PINS_12, FALSE);
 }
 

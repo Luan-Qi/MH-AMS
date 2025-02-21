@@ -278,21 +278,6 @@ void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void)
 }
 
 /**
-  * @brief  this function handles TMR1 channel handler.
-  * @param  none
-  * @retval none
-  */
-void TMR1_CH_IRQHandler(void)
-{
-  /* add user code begin TMR1_CH_IRQ 0 */
-
-  /* add user code end TMR1_CH_IRQ 0 */
-  /* add user code begin TMR1_CH_IRQ 1 */
-
-  /* add user code end TMR1_CH_IRQ 1 */
-}
-
-/**
   * @brief  this function handles TMR3 handler.
   * @param  none
   * @retval none
@@ -307,6 +292,29 @@ void TMR3_GLOBAL_IRQHandler(void)
   /* add user code begin TMR3_GLOBAL_IRQ 1 */
 
   /* add user code end TMR3_GLOBAL_IRQ 1 */
+}
+
+
+/**
+  * @brief  this function handles TMR6 handler.
+  * @param  none
+  * @retval none
+  */
+void TMR6_GLOBAL_IRQHandler(void)
+{
+  /* add user code begin TMR6_GLOBAL_IRQ 0 */
+
+  /* add user code end TMR6_GLOBAL_IRQ 0 */
+
+
+  /* add user code begin TMR6_GLOBAL_IRQ 1 */
+	
+	if(tmr_interrupt_flag_get(TMR6, TMR_OVF_FLAG) != RESET)
+  {
+		tmr_flag_clear(TMR6, TMR_OVF_FLAG);
+	}
+
+  /* add user code end TMR6_GLOBAL_IRQ 1 */
 }
 
 /**
@@ -327,6 +335,23 @@ void TMR16_GLOBAL_IRQHandler(void)
 }
 
 /**
+  * @brief  this function handles TMR17 handler.
+  * @param  none
+  * @retval none
+  */
+void TMR17_GLOBAL_IRQHandler(void)
+{
+  /* add user code begin TMR17_GLOBAL_IRQ 0 */
+
+  /* add user code end TMR17_GLOBAL_IRQ 0 */
+
+
+  /* add user code begin TMR17_GLOBAL_IRQ 1 */
+
+  /* add user code end TMR17_GLOBAL_IRQ 1 */
+}
+
+/**
   * @brief  this function handles USART1 handler.
   * @param  none
   * @retval none
@@ -340,7 +365,7 @@ void USART1_IRQHandler(void)
 	
 	if(usart_interrupt_flag_get(USART1, USART_TDC_FLAG) != RESET)
   {
-		gpio_bits_write(GPIOA, GPIO_PINS_12, FALSE);
+		BambuBUS_UART_RTS(FALSE);
 		usart_flag_clear(USART1, USART_TDC_FLAG);
   }
   if(usart_interrupt_flag_get(USART1, USART_RDBF_FLAG) != RESET)

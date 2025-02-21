@@ -45,15 +45,15 @@ void button_main_run()
 	
 	if(BUTTON_UP==RESET)
 	{
-		if(motor_state==0){motor_set(0, 888);motor_state = 1;}return;
+		if(motor_state==0){motor_set(motor_motions_num, 888);motor_state = 1;}return;
 	}
 	else
 	{
 		if(BUTTON_DOWN==RESET){
-			if(motor_state==0){motor_set(0, -888);motor_state = 1;}return;
+			if(motor_state==0){motor_set(motor_motions_num, -888);motor_state = 1;}return;
 		}
 		else{
-			if(motor_state==1){motor_set(0, 0);motor_state = 0;}
+			if(motor_state==1){motor_set(motor_motions_num, 0);motor_state = 0;}
 		}
 	}
 	
@@ -65,7 +65,6 @@ void button_main_run()
 			channel_choose++;
 			if(channel_choose>channel_max-1) channel_choose = 0;
 			motor_channel_requent(channel_choose);
-			//motor_motions_requent(888, 10);
 		}
 	}
 	else

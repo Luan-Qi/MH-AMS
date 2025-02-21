@@ -68,9 +68,10 @@ void SysTick_Handler(void);
 
 void DMA1_Channel5_4_IRQHandler(void);
 void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void);
-void TMR1_CH_IRQHandler(void);
 void TMR3_GLOBAL_IRQHandler(void);
+void TMR6_GLOBAL_IRQHandler(void);
 void TMR16_GLOBAL_IRQHandler(void);
+void TMR17_GLOBAL_IRQHandler(void);
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 /* add user code begin exported functions */

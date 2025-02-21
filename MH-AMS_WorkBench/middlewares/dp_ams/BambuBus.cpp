@@ -113,11 +113,16 @@ _filament_motion_state_set get_filament_motion(int num)
 	return data_save.filament[num / 4][num % 4].motion_set;
 }
 
+void BambuBUS_UART_RTS(confirm_state bit_state)
+{
+	gpio_bits_write(GPIOB, GPIO_PINS_3, bit_state);
+}
+
 
 void send_uart(const unsigned char *data, uint16_t length)
 {
 	wk_dma_channel_config(DMA1_CHANNEL4, (uint32_t)&USART1->dt, (uint32_t)data, length);
-	gpio_bits_write(GPIOA, GPIO_PINS_12, TRUE);
+	BambuBUS_UART_RTS(TRUE);
 	dma_channel_enable(DMA1_CHANNEL4, TRUE);
 }
 
@@ -446,7 +451,7 @@ void set_motion_res_datas(unsigned char *set_buf, unsigned char AMS_num, unsigne
             meters = data_save.filament[AMS_num][read_num].meters;
         }
     }
-    printf("%f\r\n", meters);
+    //printf("%f\r\n", meters);
     set_buf[0] = AMS_num;
     set_buf[2] = flagx;
     set_buf[3] = read_num; // maybe using number

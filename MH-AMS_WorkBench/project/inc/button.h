@@ -3,14 +3,14 @@
 
 #include "main.h"
 
-#define BUTTON0_GPIO				GPIOA
-#define BUTTON0_PIN					GPIO_PINS_11
+#define BUTTON0_GPIO				GPIOB
+#define BUTTON0_PIN					GPIO_PINS_15
 
-#define BUTTON_UP_GPIO			GPIOA
-#define BUTTON_UP_PIN				GPIO_PINS_8
+#define BUTTON_UP_GPIO			GPIOF
+#define BUTTON_UP_PIN				GPIO_PINS_7
 
-#define BUTTON_DOWN_GPIO		GPIOB
-#define BUTTON_DOWN_PIN			GPIO_PINS_2
+#define BUTTON_DOWN_GPIO		GPIOF
+#define BUTTON_DOWN_PIN			GPIO_PINS_6
 
 #define BUTTON0 		gpio_input_data_bit_read(BUTTON0_GPIO, BUTTON0_PIN)
 #define BUTTON_UP 	gpio_input_data_bit_read(BUTTON_UP_GPIO, BUTTON_UP_PIN)

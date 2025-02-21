@@ -7,15 +7,20 @@
  extern "C" {
 #endif
 
-#define IIC1_SCL_GPIO			GPIOA
-#define IIC1_SCL_PIN			GPIO_PINS_15
+#define IIC1_SCL_GPIO			GPIOB
+#define IIC1_SCL_PIN			GPIO_PINS_13
 #define IIC1_SDA_GPIO			GPIOB
-#define IIC1_SDA_PIN			GPIO_PINS_3
+#define IIC1_SDA_PIN			GPIO_PINS_14
 
-#define IIC2_SCL_GPIO			GPIOF
-#define IIC2_SCL_PIN			GPIO_PINS_1
-#define IIC2_SDA_GPIO			GPIOF
-#define IIC2_SDA_PIN			GPIO_PINS_0
+#define IIC2_SCL_GPIO			GPIOA
+#define IIC2_SCL_PIN			GPIO_PINS_9
+#define IIC2_SDA_GPIO			GPIOA
+#define IIC2_SDA_PIN			GPIO_PINS_10
+	 
+#define IIC3_SCL_GPIO			GPIOA
+#define IIC3_SCL_PIN			GPIO_PINS_11
+#define IIC3_SDA_GPIO			GPIOA
+#define IIC3_SDA_PIN			GPIO_PINS_12
 
 #define IIC_NOP		  			delay_IIC(100) 
 

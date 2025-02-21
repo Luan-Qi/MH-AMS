@@ -49,6 +49,7 @@ enum package_type
 
 extern void BambuBus_init();
 extern int 	BambuBus_run();
+extern void BambuBUS_UART_RTS(confirm_state bit_state);
 
 void RX_IRQ(unsigned char _RX_IRQ_data);
 

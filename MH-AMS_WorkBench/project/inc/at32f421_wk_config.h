@@ -91,14 +91,23 @@ extern "C" {
   /* init gpio function. */
   void wk_gpio_config(void);
 
+  /* init i2c1 function. */
+  void wk_i2c1_init(void);
+
   /* init tmr1 function. */
   void wk_tmr1_init(void);
 
   /* init tmr3 function. */
   void wk_tmr3_init(void);
 
+  /* init tmr6 function. */
+  void wk_tmr6_init(void);
+
   /* init tmr16 function. */
   void wk_tmr16_init(void);
+
+  /* init tmr17 function. */
+  void wk_tmr17_init(void);
 
   /* init usart1 function. */
   void wk_usart1_init(void);

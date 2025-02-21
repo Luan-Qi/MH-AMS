@@ -11,6 +11,7 @@ extern "C" {
 	
 extern AS5600 as5600;
 extern AS5600 as5600_2;
+extern AS5600 as5600_3;
 
 void MH_MCU_init();
 void main_run();

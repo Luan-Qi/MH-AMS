@@ -103,13 +103,14 @@ int main(void)
   /* usart1 tx dma remap */
   scfg_usart1_tx_dma_channel_remap(SCFG_USART1_TX_TO_DMA_CHANNEL_4);
 
-  //dma_channel_enable(DMA1_CHANNEL4, TRUE);
-
   /* init usart1 function. */
   wk_usart1_init();
 
   /* init usart2 function. */
   wk_usart2_init();
+
+  /* init i2c1 function. */
+  wk_i2c1_init();
 
   /* init gpio function. */
   wk_gpio_config();
@@ -120,8 +121,14 @@ int main(void)
   /* init tmr3 function. */
   wk_tmr3_init();
 
+  /* init tmr6 function. */
+  wk_tmr6_init();
+
   /* init tmr16 function. */
   wk_tmr16_init();
+
+  /* init tmr17 function. */
+  wk_tmr17_init();
 
   /* add user code begin 2 */
 	

@@ -468,6 +468,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drivers\src\at32f421_scfg.c</FilePath>
             </File>
+            <File>
+              <FileName>at32f421_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drivers\src\at32f421_i2c.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

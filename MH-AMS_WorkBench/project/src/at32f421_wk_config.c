@@ -171,11 +171,20 @@ void wk_periph_clock_config(void)
   /* enable tmr16 periph clock */
   crm_periph_clock_enable(CRM_TMR16_PERIPH_CLOCK, TRUE);
 
+  /* enable tmr17 periph clock */
+  crm_periph_clock_enable(CRM_TMR17_PERIPH_CLOCK, TRUE);
+
   /* enable tmr3 periph clock */
   crm_periph_clock_enable(CRM_TMR3_PERIPH_CLOCK, TRUE);
 
+  /* enable tmr6 periph clock */
+  crm_periph_clock_enable(CRM_TMR6_PERIPH_CLOCK, TRUE);
+
   /* enable usart2 periph clock */
   crm_periph_clock_enable(CRM_USART2_PERIPH_CLOCK, TRUE);
+
+  /* enable i2c1 periph clock */
+  crm_periph_clock_enable(CRM_I2C1_PERIPH_CLOCK, TRUE);
 }
 
 /**
@@ -194,13 +203,14 @@ void wk_nvic_config(void)
   NVIC_SetPriority(DebugMonitor_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(PendSV_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
   NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 15, 0));
-  nvic_irq_enable(DMA1_Channel5_4_IRQn, 0, 0);
-  nvic_irq_enable(TMR1_BRK_OVF_TRG_HALL_IRQn, 0, 0);
-  nvic_irq_enable(TMR1_CH_IRQn, 0, 0);
+  nvic_irq_enable(DMA1_Channel5_4_IRQn, 2, 0);
+  nvic_irq_enable(TMR1_BRK_OVF_TRG_HALL_IRQn, 1, 0);
   nvic_irq_enable(TMR3_GLOBAL_IRQn, 0, 0);
+  nvic_irq_enable(TMR6_GLOBAL_IRQn, 5, 0);
   nvic_irq_enable(TMR16_GLOBAL_IRQn, 0, 0);
+  nvic_irq_enable(TMR17_GLOBAL_IRQn, 0, 0);
   nvic_irq_enable(USART1_IRQn, 0, 0);
-  nvic_irq_enable(USART2_IRQn, 1, 0);
+  nvic_irq_enable(USART2_IRQn, 6, 0);
 }
 
 /**
@@ -223,61 +233,103 @@ void wk_gpio_config(void)
 
   /* gpio input config */
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_1 | GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_8 | 
-                               GPIO_PINS_11;
+  gpio_init_struct.gpio_pins = GPIO_PINS_1 | GPIO_PINS_2 | GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_7;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_2;
+  gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_1 | GPIO_PINS_2 | GPIO_PINS_15;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
 
-  /* gpio output config */
-  gpio_bits_set(GPIOF, GPIO_PINS_0 | GPIO_PINS_1);
-  gpio_bits_reset(GPIOA, GPIO_PINS_12);
-  gpio_bits_set(GPIOA, GPIO_PINS_15);
-  gpio_bits_set(GPIOB, GPIO_PINS_3);
-  gpio_bits_reset(GPIOB, GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7);
-
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_1;
+  gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_6 | GPIO_PINS_7;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOF, &gpio_init_struct);
 
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_12;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_15;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
-  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_3;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOB, &gpio_init_struct);
+  /* gpio output config */
+  gpio_bits_reset(GPIOA, GPIO_PINS_0 | GPIO_PINS_3 | GPIO_PINS_6 | GPIO_PINS_9 | GPIO_PINS_10 | 
+                  GPIO_PINS_11 | GPIO_PINS_12);
+  gpio_bits_reset(GPIOB, GPIO_PINS_10 | GPIO_PINS_12 | GPIO_PINS_13 | GPIO_PINS_14 | GPIO_PINS_3);
 
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
-  gpio_init_struct.gpio_pins = GPIO_PINS_4 | GPIO_PINS_5 | GPIO_PINS_6 | GPIO_PINS_7;
+  gpio_init_struct.gpio_pins = GPIO_PINS_0 | GPIO_PINS_3 | GPIO_PINS_6 | GPIO_PINS_9;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOA, &gpio_init_struct);
+
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_10 | GPIO_PINS_12 | GPIO_PINS_13 | GPIO_PINS_14 | GPIO_PINS_3;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOB, &gpio_init_struct);
+
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
+  gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+  gpio_init_struct.gpio_pins = GPIO_PINS_10 | GPIO_PINS_11 | GPIO_PINS_12;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init(GPIOA, &gpio_init_struct);
 
   /* add user code begin gpio_config 2 */
 
   /* add user code end gpio_config 2 */
+}
+
+/**
+  * @brief  init i2c1 function.
+  * @param  none
+  * @retval none
+  */
+void wk_i2c1_init(void)
+{
+  /* add user code begin i2c1_init 0 */
+
+  /* add user code end i2c1_init 0 */
+
+  gpio_init_type gpio_init_struct;
+
+  gpio_default_para_init(&gpio_init_struct);
+
+  /* add user code begin i2c1_init 1 */
+
+  /* add user code end i2c1_init 1 */
+
+  /* configure the SCL pin */
+  gpio_pin_mux_config(GPIOF, GPIO_PINS_SOURCE1, GPIO_MUX_1);
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_pins = GPIO_PINS_1;
+  gpio_init(GPIOF, &gpio_init_struct);
+
+  /* configure the SDA pin */
+  gpio_pin_mux_config(GPIOF, GPIO_PINS_SOURCE0, GPIO_MUX_1);
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_OPEN_DRAIN;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init_struct.gpio_pins = GPIO_PINS_0;
+  gpio_init(GPIOF, &gpio_init_struct);
+
+  i2c_init(I2C1, I2C_FSMODE_DUTY_2_1, 100000);
+  i2c_own_address1_set(I2C1, I2C_ADDRESS_MODE_7BIT, 0x0);
+  i2c_ack_enable(I2C1, TRUE);
+  i2c_clock_stretch_enable(I2C1, TRUE);
+  i2c_general_call_enable(I2C1, FALSE);
+
+  /* add user code begin i2c1_init 2 */
+
+  /* add user code end i2c1_init 2 */
+
+  i2c_enable(I2C1, TRUE);
+
+  /* add user code begin i2c1_init 3 */
+
+  /* add user code end i2c1_init 3 */
 }
 
 /**
@@ -315,7 +367,6 @@ void wk_tmr1_init(void)
    *     --tmr_interrupt_enable(...)
    * 2. Add the user's interrupt handler code into the below function in the at32f421_int.c file.
    *     --void TMR1_BRK_OVF_TRG_HALL_IRQHandler(void)
-   *     --void TMR1_CH_IRQHandler(void)
    */
 
   /* add user code begin tmr1_init 2 */
@@ -346,35 +397,17 @@ void wk_tmr3_init(void)
   /* add user code end tmr3_init 1 */
 
   /* configure the tmr3 CH1 pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE6, GPIO_MUX_1);
-  gpio_init_struct.gpio_pins = GPIO_PINS_6;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  /* configure the tmr3 CH2 pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE7, GPIO_MUX_1);
-  gpio_init_struct.gpio_pins = GPIO_PINS_7;
-  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
-  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
-  gpio_init(GPIOA, &gpio_init_struct);
-
-  /* configure the tmr3 CH3 pin */
-  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE0, GPIO_MUX_1);
-  gpio_init_struct.gpio_pins = GPIO_PINS_0;
+  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE4, GPIO_MUX_1);
+  gpio_init_struct.gpio_pins = GPIO_PINS_4;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init(GPIOB, &gpio_init_struct);
 
-  /* configure the tmr3 CH4 pin */
-  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE1, GPIO_MUX_1);
-  gpio_init_struct.gpio_pins = GPIO_PINS_1;
+  /* configure the tmr3 CH2 pin */
+  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE5, GPIO_MUX_1);
+  gpio_init_struct.gpio_pins = GPIO_PINS_5;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
@@ -419,34 +452,6 @@ void wk_tmr3_init(void)
 
   tmr_output_channel_immediately_set(TMR3, TMR_SELECT_CHANNEL_2, FALSE);
 
-  /* configure channel 3 output settings */
-  tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
-  tmr_output_struct.oc_output_state = TRUE;
-  tmr_output_struct.occ_output_state = FALSE;
-  tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
-  tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
-  tmr_output_struct.oc_idle_state = FALSE;
-  tmr_output_struct.occ_idle_state = FALSE;
-  tmr_output_channel_config(TMR3, TMR_SELECT_CHANNEL_3, &tmr_output_struct);
-  tmr_channel_value_set(TMR3, TMR_SELECT_CHANNEL_3, 0);
-  tmr_output_channel_buffer_enable(TMR3, TMR_SELECT_CHANNEL_3, FALSE);
-
-  tmr_output_channel_immediately_set(TMR3, TMR_SELECT_CHANNEL_3, FALSE);
-
-  /* configure channel 4 output settings */
-  tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
-  tmr_output_struct.oc_output_state = TRUE;
-  tmr_output_struct.occ_output_state = FALSE;
-  tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
-  tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
-  tmr_output_struct.oc_idle_state = FALSE;
-  tmr_output_struct.occ_idle_state = FALSE;
-  tmr_output_channel_config(TMR3, TMR_SELECT_CHANNEL_4, &tmr_output_struct);
-  tmr_channel_value_set(TMR3, TMR_SELECT_CHANNEL_4, 0);
-  tmr_output_channel_buffer_enable(TMR3, TMR_SELECT_CHANNEL_4, FALSE);
-
-  tmr_output_channel_immediately_set(TMR3, TMR_SELECT_CHANNEL_4, FALSE);
-
 
   tmr_counter_enable(TMR3, TRUE);
 
@@ -461,6 +466,46 @@ void wk_tmr3_init(void)
   /* add user code begin tmr3_init 2 */
 
   /* add user code end tmr3_init 2 */
+}
+
+/**
+  * @brief  init tmr6 function.
+  * @param  none
+  * @retval none
+  */
+void wk_tmr6_init(void)
+{
+  /* add user code begin tmr6_init 0 */
+
+  /* add user code end tmr6_init 0 */
+
+  /* add user code begin tmr6_init 1 */
+
+  /* add user code end tmr6_init 1 */
+
+  /* configure counter settings */
+  tmr_base_init(TMR6, 3417, 12);
+  tmr_cnt_dir_set(TMR6, TMR_COUNT_UP);
+  tmr_period_buffer_enable(TMR6, FALSE);
+
+  /* configure primary mode settings */
+  tmr_primary_mode_select(TMR6, TMR_PRIMARY_SEL_RESET);
+
+  tmr_counter_enable(TMR6, TRUE);
+
+  /**
+   * Users need to configure TMR6 interrupt functions according to the actual application.
+   * 1. Call the below function to enable the corresponding TMR6 interrupt.
+   *     --tmr_interrupt_enable(...)
+   * 2. Add the user's interrupt handler code into the below function in the at32f421_int.c file.
+   *     --void TMR6_GLOBAL_IRQHandler(void)
+   */
+
+  /* add user code begin tmr6_init 2 */
+	
+	tmr_interrupt_enable(TMR6, TMR_OVF_INT, TRUE);
+
+  /* add user code end tmr6_init 2 */
 }
 
 /**
@@ -494,7 +539,7 @@ void wk_tmr16_init(void)
   gpio_init(GPIOB, &gpio_init_struct);
 
   /* configure counter settings */
-  tmr_base_init(TMR16, 3417, 12);
+  tmr_base_init(TMR16, 999, 119);
   tmr_cnt_dir_set(TMR16, TMR_COUNT_UP);
   tmr_clock_source_div_set(TMR16, TMR_CLOCK_DIV1);
   tmr_repetition_counter_set(TMR16, 0);
@@ -544,6 +589,84 @@ void wk_tmr16_init(void)
 }
 
 /**
+  * @brief  init tmr17 function.
+  * @param  none
+  * @retval none
+  */
+void wk_tmr17_init(void)
+{
+  /* add user code begin tmr17_init 0 */
+
+  /* add user code end tmr17_init 0 */
+
+  gpio_init_type gpio_init_struct;
+  tmr_output_config_type tmr_output_struct;
+  tmr_brkdt_config_type tmr_brkdt_struct;
+
+  gpio_default_para_init(&gpio_init_struct);
+
+  /* add user code begin tmr17_init 1 */
+
+  /* add user code end tmr17_init 1 */
+
+  /* configure the tmr17 CH1 pin */
+  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE9, GPIO_MUX_2);
+  gpio_init_struct.gpio_pins = GPIO_PINS_9;
+  gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  gpio_init(GPIOB, &gpio_init_struct);
+
+  /* configure counter settings */
+  tmr_base_init(TMR17, 999, 119);
+  tmr_cnt_dir_set(TMR17, TMR_COUNT_UP);
+  tmr_clock_source_div_set(TMR17, TMR_CLOCK_DIV1);
+  tmr_repetition_counter_set(TMR17, 0);
+  tmr_period_buffer_enable(TMR17, FALSE);
+
+  /* configure channel 1 output settings */
+  tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
+  tmr_output_struct.oc_output_state = TRUE;
+  tmr_output_struct.occ_output_state = FALSE;
+  tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
+  tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
+  tmr_output_struct.oc_idle_state = FALSE;
+  tmr_output_struct.occ_idle_state = FALSE;
+  tmr_output_channel_config(TMR17, TMR_SELECT_CHANNEL_1, &tmr_output_struct);
+  tmr_channel_value_set(TMR17, TMR_SELECT_CHANNEL_1, 0);
+  tmr_output_channel_buffer_enable(TMR17, TMR_SELECT_CHANNEL_1, FALSE);
+
+  tmr_output_channel_immediately_set(TMR17, TMR_SELECT_CHANNEL_1, FALSE);
+
+  /* configure break and dead-time settings */
+  tmr_brkdt_struct.brk_enable = FALSE;
+  tmr_brkdt_struct.auto_output_enable = FALSE;
+  tmr_brkdt_struct.brk_polarity = TMR_BRK_INPUT_ACTIVE_LOW;
+  tmr_brkdt_struct.fcsoen_state = FALSE;
+  tmr_brkdt_struct.fcsodis_state = FALSE;
+  tmr_brkdt_struct.wp_level = TMR_WP_OFF;
+  tmr_brkdt_struct.deadtime = 0;
+  tmr_brkdt_config(TMR17, &tmr_brkdt_struct);
+
+  tmr_output_enable(TMR17, TRUE);
+
+  tmr_counter_enable(TMR17, TRUE);
+
+  /**
+   * Users need to configure TMR17 interrupt functions according to the actual application.
+   * 1. Call the below function to enable the corresponding TMR17 interrupt.
+   *     --tmr_interrupt_enable(...)
+   * 2. Add the user's interrupt handler code into the below function in the at32f421_int.c file.
+   *     --void TMR17_GLOBAL_IRQHandler(void)
+   */
+
+  /* add user code begin tmr17_init 2 */
+
+  /* add user code end tmr17_init 2 */
+}
+
+/**
   * @brief  init usart1 function
   * @param  none
   * @retval none
@@ -562,22 +685,22 @@ void wk_usart1_init(void)
   /* add user code end usart1_init 1 */
 
   /* configure the TX pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE9, GPIO_MUX_1);
+  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE6, GPIO_MUX_0);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_9;
+  gpio_init_struct.gpio_pins = GPIO_PINS_6;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
+  gpio_init(GPIOB, &gpio_init_struct);
 
   /* configure the RX pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE10, GPIO_MUX_1);
+  gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE7, GPIO_MUX_0);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_10;
+  gpio_init_struct.gpio_pins = GPIO_PINS_7;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
-  gpio_init(GPIOA, &gpio_init_struct);
+  gpio_init(GPIOB, &gpio_init_struct);
 
   /* configure param */
   usart_init(USART1, 1250000, USART_DATA_9BITS, USART_STOP_1_BIT);
@@ -629,20 +752,20 @@ void wk_usart2_init(void)
   /* add user code end usart2_init 1 */
 
   /* configure the TX pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE2, GPIO_MUX_1);
+  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE8, GPIO_MUX_4);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_2;
+  gpio_init_struct.gpio_pins = GPIO_PINS_8;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
   /* configure the RX pin */
-  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE3, GPIO_MUX_1);
+  gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE15, GPIO_MUX_1);
   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-  gpio_init_struct.gpio_pins = GPIO_PINS_3;
+  gpio_init_struct.gpio_pins = GPIO_PINS_15;
   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   gpio_init(GPIOA, &gpio_init_struct);
 
@@ -693,7 +816,7 @@ void wk_dma1_channel4_init(void)
   dma_init_struct.memory_inc_enable = TRUE;
   dma_init_struct.peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_BYTE;
   dma_init_struct.peripheral_inc_enable = FALSE;
-  dma_init_struct.priority = DMA_PRIORITY_VERY_HIGH;
+  dma_init_struct.priority = DMA_PRIORITY_LOW;
   dma_init_struct.loop_mode_enable = FALSE;
   dma_init(DMA1_CHANNEL4, &dma_init_struct);
 
