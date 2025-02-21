@@ -9,6 +9,7 @@
 	 
 const uint8_t motor_channel_num = 0;//Index of channel selection motor
 const uint8_t motor_motions_num = 1;//Index of feeding motor numbers
+extern uint8_t motor_motions_busy;
 
 void motor_pid_init();
 void motor_set(uint8_t channel, int16_t speed);

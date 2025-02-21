@@ -44,6 +44,7 @@ void AS5600_test_run()
 }
 
 uint32_t motions_time = 0;
+int now_filament_num = -1;
 
 void motor_motion_run()
 {
@@ -51,8 +52,13 @@ void motor_motion_run()
 	else return;
 
 	int num = get_now_filament_num();
+	if(now_filament_num!=num&&motor_motions_busy==0)
+	{
+		now_filament_num = num;
+		motor_channel_requent(now_filament_num);
+	}
 
-	switch (get_filament_motion(num))
+	switch (get_filament_motion(now_filament_num))
 	{
 		case need_send_out:
 			printf("S");
@@ -88,10 +94,10 @@ void main_run()
 	beep_run();
 	button_main_run();
 	//AS5600_test_run();
+	motor_motions_test();
 	motor_motion_run();
 	motor_channel_run();
 	motor_motions_run();
-	motor_motions_test();
 }
 
 

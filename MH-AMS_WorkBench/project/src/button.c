@@ -4,7 +4,7 @@
 uint32_t button_time = 0;
 uint8_t motor_state = 0;
 uint8_t motor_choose = 0;
-uint8_t channel_choose = 0;
+uint8_t channel_choose = 5;
 
 void button_test_run()
 {
