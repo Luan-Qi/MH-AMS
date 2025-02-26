@@ -8,11 +8,14 @@ extern "C"
 {
 #endif
 
-#define BambuBus_uart uart0
-#define BambuBus_uart_IRQ UART0_IRQ
-#define BambuBus_pin_tx 0
-#define BambuBus_pin_rx 1
-#define BambuBus_pin_de 6
+#define BambuBus_uart 		USART1
+#define BambuBus_uart_DMA 	DMA1_CHANNEL4
+#define BambuBus_RTS_GPIO 	GPIOB
+#define BambuBus_RTS_Pin 	GPIO_PINS_3
+
+#define use_flash_addr					(62 * 1024)
+#define BambuBus_BUFEER_SIZE			776
+#define BambuBus_FLASH_ADDRESS_START	(0x08000000 + use_flash_addr)
 
 enum _filament_status
 {

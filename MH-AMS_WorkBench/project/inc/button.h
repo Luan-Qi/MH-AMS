@@ -20,8 +20,6 @@
  extern "C" {
 #endif
 
-void button_test_run();
-void motor_init();
 void button_main_run();
 	 
 #ifdef __cplusplus

@@ -405,7 +405,7 @@
             </File>
             <File>
               <FileName>flash.c</FileName>
-              <FileType>1</FileType>
+              <FileType>8</FileType>
               <FilePath>..\src\flash.c</FilePath>
             </File>
             <File>

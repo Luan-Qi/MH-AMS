@@ -58,8 +58,6 @@
 
 Shell shell;
 
-//i2c_handle_type hi2cx;
-
 /* add user code end private variables */
 
 /* private function prototypes --------------------------------------------*/

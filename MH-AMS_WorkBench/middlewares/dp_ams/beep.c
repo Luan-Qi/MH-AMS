@@ -10,6 +10,7 @@ void beep_set(uint8_t set)
 	else beep_state = 0;
 }
 
+//beep requent function, number of times, duration of sound on, duration of sound off
 bool beep_request(uint8_t times, uint8_t delay_on, uint8_t delay_down)
 {
 	if(beep_busy>0) return true;
@@ -28,6 +29,7 @@ bool beep_request(uint8_t times, uint8_t delay_on, uint8_t delay_down)
 	return TRUE;
 }
 
+//Main function of beep operation
 void beep_run()
 {
 	static uint32_t beep_time = 0;

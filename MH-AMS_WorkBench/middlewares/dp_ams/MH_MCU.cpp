@@ -24,9 +24,9 @@ void MH_MCU_init()
 {
 	AS5600_init();
 	motor_pid_init();
-	BambuBUS_UART_RTS(FALSE);
 	BambuBus_init();
 	printf("inittttttttttttttttt\r\n");
+	BambuBUS_UART_RTS(FALSE);
 }
 
 uint32_t AS5600_time = 0;
@@ -61,18 +61,18 @@ void motor_motion_run()
 	switch (get_filament_motion(now_filament_num))
 	{
 		case need_send_out:
-			printf("S");
-			motor_motions_requent(995, 10, num);
+			//printf("S");
+			motor_motions_requent(995, 0, num);
 			break;
 		case need_pull_back:
-			printf("P");
-			motor_motions_requent(-995, 10, num);
+			//printf("P");
+			motor_motions_requent(-995, 0, num);
 			break;
 		case on_use:
-			printf("U");
+			//printf("U");
 			break;
 		case idle:
-			printf("I");
+			//printf("I");
 			break;
 	}
 }
@@ -94,7 +94,7 @@ void main_run()
 	beep_run();
 	button_main_run();
 	//AS5600_test_run();
-	motor_motions_test();
+	//motor_motions_test();
 	motor_motion_run();
 	motor_channel_run();
 	motor_motions_run();

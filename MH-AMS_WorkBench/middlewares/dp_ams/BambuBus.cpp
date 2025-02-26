@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "CRC16.h"
 #include "CRC8.h"
+#include "flash.h"
 
 #define _Bambubus_DEBUG_mode_
 
@@ -40,8 +41,6 @@ void debug_buf(uint8_t *buf, int len)
 	printf("\r\n");
 }
 
-#include "flash.h" // 包含用于Flash操作的函数
-#define use_flash_addr (256 * 1024)
 
 struct flash_save_struct
 {
@@ -58,21 +57,22 @@ void Bambubus_set_need_to_save()
 
 bool Bambubus_read()
 {
-//    flash_save_struct *ptr = (flash_save_struct *)(XIP_BASE + use_flash_addr);
-//    if (ptr->check == 0x40614061)
-//    {
-//        memcpy(&data_save, (void *)(XIP_BASE + use_flash_addr), sizeof(data_save));
-//        return true;
-//    }
-    return false;
+	flash_save_struct *ptr = (flash_save_struct *)BambuBus_FLASH_ADDRESS_START;
+	if (ptr->check == 0x40614061)
+	{
+		flash_read(BambuBus_FLASH_ADDRESS_START, (uint16_t *)&data_save, sizeof(data_save));
+		printf("read success\r\n");
+		return true;
+	}
+	return false;
 }
 void Bambubus_save()
 {
-//    uint32_t primask = __get_PRIMASK(); // 保存当前中断状态
-//    __disable_irq();                    // 禁用中断
-//    flash_range_erase(use_flash_addr, ((sizeof(data_save) / FLASH_SECTOR_SIZE + 1) * FLASH_SECTOR_SIZE));
-//    flash_range_program(use_flash_addr, (uint8_t *)&data_save, sizeof(data_save));
-//    __set_PRIMASK(primask); // 恢复之前的中断状态
+	uint32_t primask = __get_PRIMASK(); // 保存当前中断状态
+	__disable_irq();                    // 禁用中断
+	error_status err_status = flash_write(BambuBus_FLASH_ADDRESS_START, (uint16_t *)&data_save, sizeof(data_save));
+	if(err_status==SUCCESS) printf("save success\r\n");
+	__set_PRIMASK(primask); // 恢复之前的中断状态
 }
 
 int get_now_filament_num()
@@ -115,15 +115,15 @@ _filament_motion_state_set get_filament_motion(int num)
 
 void BambuBUS_UART_RTS(confirm_state bit_state)
 {
-	gpio_bits_write(GPIOB, GPIO_PINS_3, bit_state);
+	gpio_bits_write(BambuBus_RTS_GPIO, BambuBus_RTS_Pin, bit_state);
 }
 
 
 void send_uart(const unsigned char *data, uint16_t length)
 {
-	wk_dma_channel_config(DMA1_CHANNEL4, (uint32_t)&USART1->dt, (uint32_t)data, length);
+	wk_dma_channel_config(BambuBus_uart_DMA, (uint32_t)&BambuBus_uart->dt, (uint32_t)data, length);
 	BambuBUS_UART_RTS(TRUE);
-	dma_channel_enable(DMA1_CHANNEL4, TRUE);
+	dma_channel_enable(BambuBus_uart_DMA, TRUE);
 }
 
 uint8_t buf_X[1000];
@@ -196,20 +196,11 @@ void RX_IRQ(unsigned char _RX_IRQ_data)
 	}
 }
 
-uint8_t _rx_bufx[64];
-uint8_t _tx_bufx[64];
-
-void BambuBUS_UART_Init(uint32_t baudrate)
-{
-	
-}
-
 void BambuBus_init()
 {
 	bool _init_ready = Bambubus_read();
 	crc_8.reset(0x39, 0x66, 0, false, false);
 	crc_16.reset(0x1021, 0x913D, 0, false, false);
-	//pinMode(BambuBus_pin_de, OUTPUT);
 
 	if (!_init_ready)
 	{
@@ -278,8 +269,6 @@ void BambuBus_init()
 			j.motion_set = idle;
 		}
 	}
-
-	BambuBUS_UART_Init(1228800);
 }
 
 bool package_check_crc16(uint8_t *data, int data_length)
