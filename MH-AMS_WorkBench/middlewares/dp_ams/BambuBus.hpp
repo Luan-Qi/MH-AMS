@@ -13,7 +13,7 @@ extern "C"
 #define BambuBus_RTS_GPIO 	GPIOB
 #define BambuBus_RTS_Pin 	GPIO_PINS_3
 
-#define use_flash_addr					(62 * 1024)
+#define use_flash_addr					(61 * 1024)
 #define BambuBus_BUFEER_SIZE			776
 #define BambuBus_FLASH_ADDRESS_START	(0x08000000 + use_flash_addr)
 
@@ -59,6 +59,7 @@ void RX_IRQ(unsigned char _RX_IRQ_data);
 extern bool Bambubus_read();
 extern void Bambubus_set_need_to_save();
 extern int 	get_now_filament_num();
+extern void set_now_filament_num(int num);
 extern void reset_filament_meters(int num);
 extern void add_filament_meters(int num, float meters);
 extern float get_filament_meters(int num);

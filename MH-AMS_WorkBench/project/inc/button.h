@@ -21,6 +21,8 @@
 #endif
 
 void button_main_run();
+void button_setting_update();
+bool button_motor_control_main(uint8_t channel, uint16_t speed);
 	 
 #ifdef __cplusplus
 }

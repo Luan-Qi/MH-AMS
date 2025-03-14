@@ -18,7 +18,7 @@
  extern "C" {
 #endif
 
-#define develop_mode 1
+//#define develop_mode 1
 
 extern uint32_t millis();
 	 

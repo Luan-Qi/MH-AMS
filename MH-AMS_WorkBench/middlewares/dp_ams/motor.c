@@ -3,22 +3,55 @@
 #include "MH_MCU.hpp"
 
 PosiPidNode motor_channel_pid;//PID of channel selection motor
-PosiPidNode motor_motions_pid;//PID of feeding motor
+PosiPidNode motor_motions_pid;//PID of feeding motorv
+uint8_t motor_motions_boost = 0;
 uint8_t motor_channel_busy = 0;//Flag of busy channel selection motor
 uint8_t motor_motions_busy = 0;//Flag of busy feeding motor
-uint8_t motor_keep_pull = 2;//State machine of sending and pulling filament state machine
+uint8_t motor_keep_pull = 0;//State machine of sending and pulling filament state machine
 
 #ifdef develop_mode
 uint8_t motor_motions_need_free = 0;
 #else
-uint8_t motor_motions_need_free = 1;//Set 1 for shifting to vacancy gear
+uint8_t motor_motions_need_free = 2;//Set 1 for shifting to vacancy gear
 #endif
+uint8_t motor_motions_free_across = 1;
+uint8_t motor_channel_need_relax = 0;//Flag of relaxation of channel selection motor
 
 uint16_t motor_channel_target = 0;//Target value of channel selection motor
-uint16_t motor_motions_target = 0;//Target value of feeding motor
+uint16_t motor_motions_last_current = 0;//Target value of feeding motor
 
-const uint16_t motor_channel_angle[4] = {2827, 1819, 3850, 765};//1409, 521, 2636, 3584
+const uint16_t motor_channel_angle[4] = {4034, 942, 2990, 1966};//4034, 942, 2990, 1966
 const uint16_t motor_motions_free = 1802;//Vacancy gear
+const uint16_t motor_channel_relative_relax[4] = {160, 160, 80, 60};
+
+void set_motor_motions_need_free()
+{
+	motor_motions_need_free = 1;
+	motor_motions_free_across = 1;
+	motor_motions_last_current = motor_motions_free;
+	printf("set_motor_motions_need_free\r\n");
+}
+
+void set_motor_motions_send_need_still()
+{
+	motor_motions_need_free = 2;
+	motor_motions_free_across = 1;
+	motor_motions_last_current = motor_motions_free;
+	printf("set_motor_motions_send_need_still\r\n");
+
+}
+
+void set_motor_channel_need_relax()
+{
+	motor_channel_need_relax = 3;
+	printf("set_motor_channel_need_relax\r\n");
+}
+
+bool motor_free_state()
+{
+	if(motor_channel_busy==0&&motor_motions_busy==0&&motor_motions_need_free==0) return true;
+	else return false;
+}
 
 //Motor PID initialization
 void motor_pid_init()
@@ -28,12 +61,29 @@ void motor_pid_init()
 	motor_channel_pid.kd = 1;
 	motor_channel_pid.limit_out_abs = 998;
 
-	motor_motions_pid.kp = 5;
+	motor_motions_pid.kp = 3;
 	motor_motions_pid.ki = 0.1;
 	motor_motions_pid.kd = 1;
-	motor_motions_pid.limit_out_abs = 800;
+	motor_motions_pid.limit_out_abs = 555;
+}
 
-	motor_motions_target = motor_motions_free + 4096;//Make sure to turn forward once
+void motor_pid_set_boost()
+{
+	motor_motions_boost = 1;
+	motor_motions_pid.limit_out_abs = 888;
+}
+
+void motor_pid_unset_boost()
+{
+	motor_motions_boost = 0;
+	motor_motions_pid.limit_out_abs = 555;
+}
+
+void motor_motions_init()
+{
+	motor_motions_last_current = motor_motions_free;
+	motor_pid_set_boost();
+	motor_channel_requent_free();
 }
 
 //Motor set function
@@ -88,7 +138,54 @@ bool motor_channel_requent(uint8_t channel)
 	if(motor_channel_busy!=0) return false;
 	
 	motor_channel_busy = 1;
-	motor_channel_target = motor_channel_angle[channel];
+	motor_channel_target = MH_MCU_data.motor_channel_angle[channel];
+	
+	return true;
+}
+
+//Channel selection motor requent specified location function
+bool motor_channel_requent_location(uint16_t target)
+{
+	if(target>4095) return false;
+	if(motor_channel_busy!=0) return false;
+	
+	motor_channel_busy = 1;
+	motor_channel_target = target;
+	
+	return true;
+}
+
+
+uint16_t get_min_distance(uint16_t temp1, uint16_t temp2)
+{
+	const int FULL_RANGE = 4096;
+	const int HALF_RANGE = FULL_RANGE / 2;
+	int16_t diff = abs((int16_t)temp1 - (int16_t)temp2);
+
+	if (diff > HALF_RANGE) diff = FULL_RANGE - diff;
+
+	return (uint16_t)diff;
+}
+
+//Channel selection motor set to free function
+bool motor_channel_requent_free()
+{
+	if(motor_channel_busy!=0) return false;
+	now_filament_num = -1;
+	
+	uint8_t i = 0;
+	uint16_t target = as5600.readAngle();
+	while(i<4)
+	{
+		if(get_min_distance(MH_MCU_data.motor_channel_angle[i], target)<500) break;
+		if(i==3) return true;
+		i++;
+	}
+
+	motor_channel_busy = 1;
+	if(MH_MCU_data.motor_channel_angle[i]>2048) motor_channel_target = MH_MCU_data.motor_channel_angle[i] - 512;
+	else motor_channel_target = MH_MCU_data.motor_channel_angle[i] + 512;
+	printf("Request channel to free success!\r\n");
 	
 	return true;
 }
@@ -119,30 +216,49 @@ void motor_channel_run()
 			case 0:
 				speed = CalcPosiPdOut(&motor_channel_pid, (float)motor_channel_target, (float)motor_channel_current);
 				break;
-			case -1:
+			case 1:
 				motor_channel_current_fix = motor_channel_current>2048 ? ((float)motor_channel_current)-4096.0 : (float)motor_channel_current;
 				speed = CalcPosiPdOut(&motor_channel_pid, (float)motor_channel_target, motor_channel_current_fix);
 				break;
-			case 1:
+			case -1:
 				motor_channel_current_fix = motor_channel_current<2048 ? ((float)motor_channel_current)+4096.0 : (float)motor_channel_current;
-				speed = CalcPosiPdOut(&motor_channel_pid, ((float)motor_channel_target)+4096.0, motor_channel_current_fix);
+				speed = CalcPosiPdOut(&motor_channel_pid, ((float)motor_channel_target), motor_channel_current_fix);
 				break;
 			default:
 				motor_border_across = 0;
 		}
 		motor_set(motor_channel_num, (int16_t)speed);
 		
-		if(abs((int16_t)motor_channel_current-(int16_t)motor_channel_target)<10||abs((int16_t)speed)<80||motor_channel_busy>80)
+		if(abs((int16_t)motor_channel_current-(int16_t)motor_channel_target)<10||abs((int16_t)speed)<80||motor_channel_busy>56)
 		{
 			motor_channel_busy=0;
 			motor_border_across = 0;
 			motor_set(motor_channel_num,0);
+			if(motor_channel_need_relax>0) motor_channel_need_relax--;
+			printf("channel_motor_complete!\r\n");
 			return;
 		}
 		else
 		{
 			if(motor_channel_busy==0xFF) motor_channel_busy=0xFF;
 			else motor_channel_busy++;
+		}
+	}
+
+	if(motor_channel_need_relax>0)
+	{
+		uint16_t target_relax = MH_MCU_data.motor_channel_angle[get_now_filament_num()];
+		switch(motor_channel_need_relax)
+		{
+			case 3:                       
+			case 2:
+				if(target_relax>2048) motor_channel_requent_location(target_relax-400);
+				else motor_channel_requent_location(target_relax+400);
+				break;
+			case 1:
+				if(target_relax>2048) motor_channel_requent_location(target_relax-motor_channel_relative_relax[get_now_filament_num()]);
+				else motor_channel_requent_location(target_relax+motor_channel_relative_relax[get_now_filament_num()]);
+				break;
 		}
 	}
 }
@@ -175,21 +291,21 @@ float AS5600_get_distance_E()
 
 int16_t motor_motions_speed = 0;//Request for motions_speed
 uint32_t motor_motions_distance = 0;//Request for motions_distance
-int motions_filament_num = 0;//variable for filament_num in operation
 float distance_S = 0;//variable for cumulative distance 
 
 //Motor running specified distance request, unable to stack
-bool motor_motions_requent(int16_t speed, uint32_t distance, int filament_num)
+bool motor_motions_requent(int16_t speed, uint32_t distance)
 {
 	if(motor_motions_busy!=0) return false;
-	if(speed<0&&motor_keep_pull!=0) return false;
+	if(now_filament_num<0) return false;
+	//if(speed<0&&motor_keep_pull!=0) return false;
 	
 	motor_motions_speed = speed;
 	motor_motions_distance = distance;
-	motions_filament_num = filament_num;
 	distance_S = 0;
 	AS5600_get_distance_E(); // RESET last_distance
 	motor_motions_busy = 1;
+	printf("Request success! Speed:%d\r\n", speed);
 	
 	return true;
 }
@@ -205,73 +321,138 @@ void motor_motions_run()
 	
 	if(motor_motions_busy)
 	{
-		if(get_filament_motion(motions_filament_num) == need_send_out&&motor_keep_pull==2)
+		if(get_filament_motion(now_filament_num) == need_send_out)
 		{
 			if(motor_set_flag==0){motor_set(motor_motions_num, motor_motions_speed);motor_set_flag++;}
 		}
-		else if(get_filament_motion(motions_filament_num) == on_use)
+		else if(get_filament_motion(now_filament_num) == on_use)
 		{
 			if(motor_motions_busy)
 			{
 				motor_motions_busy=0;
 				motor_set_flag = 0;
 				motor_set(motor_motions_num,0);
-				motor_motions_need_free = 1;
-				motor_keep_pull = 0;
+				set_motor_motions_send_need_still();
+				printf("send out complete!\r\n");
 				return;
 			}
 		}
-		else if((get_filament_motion(motions_filament_num) == need_pull_back&&motor_keep_pull==0)||motor_keep_pull==1)
+		else if(get_filament_motion(now_filament_num) == need_pull_back||motor_keep_pull==1)
 		{
 			if(motor_set_flag==0)
 			{
 				motor_set(motor_motions_num, motor_motions_speed);
 				motor_set_flag++;
-				motor_keep_pull=1;
+				motor_keep_pull = 1;
+				motor_channel_requent(now_filament_num);
 			}
 			distance_S += AS5600_get_distance_E();
-			if(distance_S<-120)
+			if(distance_S<-110)
 			{
 				motor_motions_busy=0;
 				motor_set_flag = 0;
-				motor_keep_pull = 2;
+				motor_keep_pull = 0;
 				motor_set(motor_motions_num,0);
-				reset_filament_meters(motions_filament_num);//Finsiah filament_pull_back after update
+				reset_filament_meters(now_filament_num);//Finsiah filament_pull_back after update
+				motor_channel_requent_free();
+				motor_pid_set_boost();
+				set_motor_motions_need_free();
+				printf("Pull back complete!\r\n");
 				return;
 			}
 		}
 	}
 
-	if(get_filament_motion(motions_filament_num) == on_use||get_filament_motion(motions_filament_num) == idle)
-		add_filament_meters(motions_filament_num, AS5600_get_distance_E());
-
-	if(motor_motions_need_free==1)
+	if(motor_motions_need_free>0)
 	{
+		if(motor_channel_busy!=0) return;
 		uint16_t motor_motions_current = as5600_2.readAngle();
+		uint16_t motor_motions_current_fix = motor_motions_current;
 		
-		if(abs(motor_motions_current-motor_motions_free)<25)
-		{
-			motor_motions_need_free = 0;
-			motor_set(motor_motions_num,0);
-			return;
-		}
+		if(motor_motions_free_across==1) motor_motions_current_fix += 4096;
+		if(motor_motions_last_current+3500<motor_motions_current&&motor_motions_free_across==1) motor_motions_free_across = 0;
+		motor_motions_last_current = motor_motions_current;
 
-		if(motor_motions_free>motor_motions_current) motor_motions_current += 4096;
-		float speed = CalcPosiPdOut(&motor_motions_pid, (float)motor_motions_target, (float)motor_motions_current);
+		switch(motor_motions_need_free)
+		{
+			case 1:
+			{
+				if(abs(motor_motions_current-motor_motions_free)<50)
+				{
+					if(motor_motions_boost>0) motor_pid_unset_boost();
+					motor_motions_need_free = 0;
+					motor_set(motor_motions_num,0);
+					return;
+				}
+				break;
+			}
+			case 2:
+			{
+				if(motor_motions_current_fix<motor_motions_free)
+				{
+					if(motor_motions_boost>0) motor_pid_unset_boost();
+					motor_motions_need_free = 0;
+					motor_set(motor_motions_num,0);
+					return;
+				}
+				break;
+			}
+		}
+		
+		if(get_filament_motion(now_filament_num) == need_pull_back)
+		{
+			motor_motions_reset();
+			motor_motions_need_free = 1;
+		}	
+		
+		float speed = -CalcPosiPdOut(&motor_motions_pid, (float)motor_motions_free, (float)motor_motions_current_fix);
 		motor_set(motor_motions_num, (int16_t)speed);
-		//printf("speed:%f\r\n", speed);
 	}
 }
 
-uint32_t motor_motions_test_time = 0;
+uint32_t motor_motions_fast_time = 0;
 
 //Main function of motor operation
-void motor_motions_test()
+void motor_motions_fast_run()
 {
-	if(millis_overstep(motor_motions_test_time)) motor_motions_test_time = millis() + 100;
+	if(millis_overstep(motor_motions_fast_time)) motor_motions_fast_time = millis() + 10;
+	else return;
+	
+	if((get_filament_motion(get_now_filament_num()) == on_use||get_filament_motion(get_now_filament_num()) == idle)&&motor_keep_pull==0)
+		add_filament_meters(get_now_filament_num(), AS5600_get_distance_E());
+	
+//	if(get_filament_meters(get_now_filament_num())>500&&get_filament_motion(get_now_filament_num()) == on_use&&motor_keep_pull==0)
+//		add_filament_meters(get_now_filament_num(), 0.01);
+}
+
+void motor_motions_reset()
+{
+	now_filament_num = -1;
+	motor_motions_busy=0;
+	motor_set_flag = 0;
+	motor_set(motor_motions_num,0);
+	motor_channel_requent_free();
+	motor_motions_need_free = 1;
+	motor_keep_pull = 2;
+	reset_filament_meters(0);
+	reset_filament_meters(1);
+	reset_filament_meters(2);
+	reset_filament_meters(3);
+	printf("motor_motions_reset\r\n");
+}
+
+uint32_t motor_motions_echo_time = 0;
+
+//Main function of motor operation
+void motor_motions_echo()
+{
+#ifdef develop_mode
+	return;
+#endif
+	if(millis_overstep(motor_motions_echo_time)) motor_motions_echo_time = millis() + 1000;
 	else return;
 
-	printf(" %d:%f\r\n", get_now_filament_num(), get_filament_meters(motions_filament_num));
+	printf("%d-%d:%f\r\n", get_filament_motion(get_now_filament_num()), now_filament_num, get_filament_meters(get_now_filament_num()));
 }
 
 
