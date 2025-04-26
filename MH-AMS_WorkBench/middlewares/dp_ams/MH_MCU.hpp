@@ -14,7 +14,7 @@ extern "C" {
 struct MH_MCU_save_struct
 {
 	uint16_t motor_channel_angle[4] = {4034, 942, 2990, 1966};
-	uint16_t motor_motions_free = 1802;
+	uint16_t motor_motions_free = 2888;
 	uint32_t crc8 = 0x40614061;
 };
 extern struct MH_MCU_save_struct MH_MCU_data;

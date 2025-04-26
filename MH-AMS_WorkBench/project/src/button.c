@@ -45,7 +45,14 @@ void button_main_run()
 	else
 	{
 		button_down_long++;
-		if(!ams_sleep&&button_down_long>500&&!button_setting_flag)
+		if(!ams_sleep&&button_down_long>300&&!button_setting_flag)
+		{
+			button_down_long = 0;
+			ams_set_sleep();
+			beep_clear();
+			return;
+		}
+		if(ams_sleep&&button_down_long>300&&!button_setting_flag)
 		{
 			button_setting_statue = 12;
 			button_setting_flag = true;
@@ -106,9 +113,20 @@ void setting_channel_angle_auto_init()
 void setting_angle_print()
 {
 	printf("setting channel angle");
-	for(uint8_t i=0;i<4;i++) printf(" %d: %d", i, setting_as5600_angle[i]);
-	printf(" motion angle:%d", setting_as5600_angle[4]);
+	for(uint8_t i=0;i<4;i++) printf(" %d:%d", i, setting_as5600_angle[i]);
+	printf("  motion angle:%d", setting_as5600_angle[4]);
 	printf("\r\n");
+}
+
+void memory_angle_print()
+{
+	printf("memory channel angle");
+	for(uint8_t i=0;i<4;i++) printf(" %d:%d", i, MH_MCU_data.motor_channel_angle[i]);
+	printf("  motion angle:%d", MH_MCU_data.motor_motions_free);
+	printf("\r\n");
+	
+	memcpy(setting_as5600_angle, MH_MCU_data.motor_channel_angle, 4 * sizeof(uint16_t));
+	setting_as5600_angle[4] = MH_MCU_data.motor_motions_free;
 }
 
 void button_setting_update()
@@ -132,12 +150,13 @@ void button_setting_update()
 		case 12:
 		{
 			printf("\r\n\r\nstart setting!\r\n");
+			memory_angle_print();
 			printf("please listen to TIMES OF BEEP which show the step of setting(0/5)!\r\n");
 			printf("using the UP KEY to finish current step, there is NO KEY to cancel setting step!\r\n");
 			printf("using the MIDDLE KEY to increase the angle and the DOWN KEY to decrease!\r\n");
-			beep_request_set(1000, 1, 255, 50);
+			beep_request_set(1000, 1, 200, 50);
 			button_setting_statue--;
-			printf("\r\nat first，please adjust motions motor to tight way! (0/5)\r\n");
+			printf("\r\nat first, please adjust motions motor to tight way! (0/5)\r\n");
 			break;
 		}
 		case 11:
@@ -230,12 +249,13 @@ void button_setting_update()
 		}
 		case 0:
 		{
-			setting_as5600_angle[4] = as5600_3.readAngle();
+			setting_as5600_angle[4] = as5600_2.readAngle();
 			setting_angle_print();
 			memcpy(MH_MCU_data.motor_channel_angle, setting_as5600_angle, 4 * sizeof(uint16_t));
 			MH_MCU_data.motor_motions_free = setting_as5600_angle[4];
 			MH_MCU_save();
 			printf("setting complete!\r\n\r\n");
+			printf("system is sleeping now!\r\n\r\n");
 			beep_clear();
 			button_setting_flag = false;
 			break;

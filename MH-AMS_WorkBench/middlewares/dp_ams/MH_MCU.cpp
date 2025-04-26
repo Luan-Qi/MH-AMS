@@ -31,12 +31,11 @@ void MH_MCU_init()
 	motor_pid_init();
 	BambuBus_init();
 	MH_MCU_read();
-	printf("inittttttttttttttttt\r\n");
 	BambuBUS_UART_RTS(FALSE);
 	motor_motions_init();
 	
-	if(if_system_init==true) beep_request_set(1000, 4, 50, 50);
-	else beep_request_set(1000, 1, 50, 50);
+	if(if_system_init==true){printf("initttttttttttt\r\n");beep_request_set(1000, 4, 50, 50);}
+	else{printf("uuuuuuuninit\r\n");beep_request_set(1000, 1, 50, 50);}
 	beep_clear();
 }
 
@@ -127,26 +126,25 @@ void motor_motion_run()
 		printf("%d shift to %d\r\n", now_filament_num, num);
 		now_filament_num = num;
 		motor_channel_requent(now_filament_num);
-		//Bambubus_set_need_to_save();
+		Bambubus_set_need_to_save();
 	}
 
 	switch (get_filament_motion(get_now_filament_num()))
 	{
 		case need_send_out:
 			//printf("S");
-			if(!ams_sleep) motor_motions_requent(995, 0);
+			if(!ams_sleep){printf("S");motor_motions_requent(995, 0);}
 			ams_feed();
 			last_state = need_send_out;
 			break;
 		case need_pull_back:
 			//printf("P");
-			if(!ams_sleep) motor_motions_requent(-995, 0);
+			if(!ams_sleep){printf("P");motor_motions_requent(-995, 0);}
 			ams_feed();
 			last_state = need_pull_back;
 			break;
 		case on_use:
 			//printf("U");
-			if(last_state==need_send_out) set_motor_channel_need_relax();
 			ams_feed();
 			last_state = on_use;
 			break;

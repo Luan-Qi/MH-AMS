@@ -1,5 +1,8 @@
 #include "beep.h"
 
+uint32_t beep_time = 0;
+uint32_t request_time = 0;
+
 uint8_t beep_busy = 0;
 uint8_t beep_queen[12] = {0};
 uint8_t beep_state = 0;
@@ -37,14 +40,14 @@ uint8_t beep_delay_down = 0;
 void beep_request_set(uint32_t cycle, uint8_t times, uint8_t delay_on, uint8_t delay_down)
 {
 	beep_cycle = cycle;beep_times = times;beep_delay_on = delay_on;beep_delay_down = delay_down;
+	beep_time = millis();
+	request_time = millis();
 }
 
 void beep_request_read(uint32_t * cycle, uint8_t * times, uint8_t * delay_on, uint8_t * delay_down)
 {
 	*cycle = beep_cycle;*times = beep_times;*delay_on = beep_delay_on;*delay_down = beep_delay_down;
 }
-
-uint32_t request_time = 0;
 
 void beep_request_run()
 {
@@ -54,8 +57,6 @@ void beep_request_run()
 		beep_request(beep_times, beep_delay_on, beep_delay_down);
 	}
 }
-
-uint32_t beep_time = 0;
 
 //Main function of beep operation
 void beep_main_run()
@@ -76,7 +77,7 @@ void beep_main_run()
 		beep_queen[11]--;
 	}
 	
-	if(beep_state == 1&&TMR6->cval<30) gpio_bits_write(GPIOB, GPIO_PINS_12, TRUE);
+	if(beep_state == 1&&TMR6->cval<100) gpio_bits_write(GPIOB, GPIO_PINS_12, TRUE);
 	else gpio_bits_write(GPIOB, GPIO_PINS_12, FALSE);
 }
 
@@ -84,6 +85,8 @@ void beep_clear()
 {
 	beep_cycle = 0xFFFFFF00;
 	beep_time = 0xFFFFFF00;
+	request_time = 0xFFFFFF00;
 	gpio_bits_write(GPIOB, GPIO_PINS_12, FALSE);
+	beep_state = 0;
 }
 
