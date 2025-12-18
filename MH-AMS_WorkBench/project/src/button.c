@@ -35,7 +35,7 @@ void button_main_run()
 			}
 			else
 			{
-				set_motor_channel_need_relax();
+				//set_motor_channel_need_relax();
 				now_filament_num = channel_choose;
 				set_now_filament_num(now_filament_num);
 				printf("button shift to %d\r\n", channel_choose);
@@ -71,9 +71,9 @@ void button_main_run()
 	if(ams_sleep) return;
 	
 #ifdef develop_mode
-	button_motor_control_main(motor_channel_num, 888);
+	button_motor_control_main(motor_channel_num, 999);
 #else
-	button_motor_control_main(motor_motions_num, 888);
+	button_motor_control_main(motor_motions_num, 999);
 #endif
 }
 

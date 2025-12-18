@@ -36,7 +36,7 @@ void MH_MCU_init()
 	
 	if(if_system_init==true){printf("initttttttttttt\r\n");beep_request_set(1000, 4, 50, 50);}
 	else{printf("uuuuuuuninit\r\n");beep_request_set(1000, 1, 50, 50);}
-	beep_clear();
+	//beep_clear();
 }
 
 uint32_t MH_MCU_time = 0;
@@ -133,13 +133,13 @@ void motor_motion_run()
 	{
 		case need_send_out:
 			//printf("S");
-			if(!ams_sleep){printf("S");motor_motions_requent(995, 0);}
+			if(!ams_sleep){motor_motions_requent(995, 0);}
 			ams_feed();
 			last_state = need_send_out;
 			break;
 		case need_pull_back:
 			//printf("P");
-			if(!ams_sleep){printf("P");motor_motions_requent(-995, 0);}
+			if(!ams_sleep){motor_motions_requent(-995, 0);}
 			ams_feed();
 			last_state = need_pull_back;
 			break;

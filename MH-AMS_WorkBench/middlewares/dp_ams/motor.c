@@ -15,13 +15,14 @@ uint8_t motor_motions_need_free = 0;
 uint8_t motor_motions_need_free = 1;//Set 1 for shifting to vacancy gear
 #endif
 uint8_t motor_motions_free_across = 0;//Flag of set full circle run
+uint16_t motor_motions_busy_long = 0;//motor_motion timeout detection
 uint8_t motor_channel_need_relax = 0;//Flag of relaxation of channel selection motor
 
 uint16_t motor_channel_target = 0;//Target value of channel selection motor
 uint16_t motor_motions_last_current = 0;//Target value of feeding motor
 
 const uint16_t motor_channel_angle[4] = {4016, 942, 2990, 1966};//4034, 942, 2990, 1966
-const uint16_t motor_motions_free = 1802;//Vacancy gear
+const uint16_t motor_motions_free = 1561;//Vacancy gear
 const uint16_t motor_channel_relative_relax[4] = {130, 70, 70, 40};
 const float motor_filament_mileage = 110.0;
 
@@ -30,6 +31,7 @@ void set_motor_motions_need_free()
 	motor_motions_need_free = 1;
 	motor_motions_free_across = 0;
 	motor_motions_last_current = MH_MCU_data.motor_motions_free;
+	motor_motions_busy_long = 0;
 	printf("set_motor_motions_need_free\r\n");
 }
 
@@ -38,6 +40,7 @@ void set_motor_motions_send_need_still()
 	motor_motions_need_free = 2;
 	motor_motions_free_across = 1;
 	motor_motions_last_current = MH_MCU_data.motor_motions_free;
+	motor_motions_busy_long = 0;
 	printf("set_motor_motions_send_need_still\r\n");
 
 }
@@ -325,7 +328,7 @@ void motor_motions_run()
 	{
 		if(get_filament_motion(now_filament_num) == need_send_out)
 		{
-			if(motor_set_flag==0){motor_set(motor_motions_num, motor_motions_speed);motor_set_flag++;}
+			if(motor_set_flag==0&&motor_channel_busy==0){motor_set(motor_motions_num, motor_motions_speed);motor_set_flag++;}
 		}
 		else if(get_filament_motion(now_filament_num) == on_use)
 		{
@@ -336,6 +339,7 @@ void motor_motions_run()
 				motor_set(motor_motions_num,0);
 				set_motor_motions_send_need_still();
 				add_filament_meters(now_filament_num, motor_filament_mileage);
+				set_motor_channel_need_relax();
 				printf("send out complete!\r\n");
 				return;
 			}
@@ -396,21 +400,23 @@ void motor_motions_run()
 					if(motor_motions_boost>0) motor_pid_unset_boost();
 					motor_motions_need_free = 0;
 					motor_set(motor_motions_num,0);
-					set_motor_channel_need_relax();
+					//set_motor_channel_need_relax();
 					return;
 				}
 				break;
 			}
 		}
 		
-		if(get_filament_motion(now_filament_num) == need_pull_back)
+		if(get_filament_motion(now_filament_num) == need_pull_back||motor_motions_busy_long>1200)
 		{
 			motor_motions_reset();
-			motor_motions_need_free = 1;
+			motor_motions_need_free = 0;
+			motor_motions_busy_long = 0;
 		}	
 		
 		float speed = -CalcPosiPdOut(&motor_motions_pid, (float)MH_MCU_data.motor_motions_free, (float)motor_motions_current_fix);
 		motor_set(motor_motions_num, (int16_t)speed);
+		motor_motions_busy_long++;
 	}
 }
 
